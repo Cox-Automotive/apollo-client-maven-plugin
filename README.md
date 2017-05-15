@@ -1,4 +1,4 @@
-# GraphQL Client for Java
+# Apollo GraphQL Client Code Generation Maven Plugin
 
 ## Usage
 
