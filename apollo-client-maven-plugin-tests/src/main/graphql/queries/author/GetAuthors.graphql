@@ -1,0 +1,5 @@
+query GetAuthors {
+    authors {
+        name
+    }
+}

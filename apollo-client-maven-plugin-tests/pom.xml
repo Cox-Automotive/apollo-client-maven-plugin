@@ -1,0 +1,105 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.coxautodev</groupId>
+        <artifactId>apollo-client-maven-plugin-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+    <artifactId>apollo-client-maven-plugin-tests</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.install.skip>true</maven.install.skip>
+        <undertow.version>1.4.14.Final</undertow.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.apollographql.apollo</groupId>
+            <artifactId>apollo-runtime</artifactId>
+            <version>0.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java-tools</artifactId>
+            <version>2.2.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java-servlet</artifactId>
+            <version>3.0.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-core</artifactId>
+            <version>${undertow.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-servlet</artifactId>
+            <version>${undertow.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.3.8.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>npm-install-apollo-codegen</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>initialize</phase>
+
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>install</argument>
+                                <argument>apollo-codegen</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.coxautodev</groupId>
+                <artifactId>apollo-client-maven-plugin</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <basePackage>com.coxautodev.java.graphql.client.tests</basePackage>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

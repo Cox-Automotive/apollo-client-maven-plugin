@@ -1,0 +1,41 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.coxautodev</groupId>
+        <artifactId>apollo-client-maven-plugin-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+    <artifactId>apollo-client-maven-plugin</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>maven-plugin</packaging>
+
+    <name>Maven plugin for generating graphql clients</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-project</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.apollographql.apollo</groupId>
+            <artifactId>compiler</artifactId>
+            <version>0.3.0</version>
+        </dependency>
+    </dependencies>
+</project>
