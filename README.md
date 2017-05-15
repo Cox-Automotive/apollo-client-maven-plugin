@@ -77,7 +77,7 @@ All plugin options and their defaults:
 ```xml
 <configuration>
     <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
-    <packageName>com.example.graphql.client</packageName>
+    <basePackage>com.example.graphql.client</basePackage>
     <schemaFile>${project.basedir}/src/main/graphql/schema.json</schemaFile>
     <addSourceRoot>true</addSourceRoot>
 </configuration>
