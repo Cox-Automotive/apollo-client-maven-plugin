@@ -2,6 +2,8 @@
 
 ## Usage
 
+A full usage example can be found in the [test project](https://github.com/Cox-Automotive/apollo-client-maven-plugin/tree/master/apollo-client-maven-plugin-tests)
+
 ### Getting Started
 
 1. Add the apollo runtime library and guava to your project's depedencies:
