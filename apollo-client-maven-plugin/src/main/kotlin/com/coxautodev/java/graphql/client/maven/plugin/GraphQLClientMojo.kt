@@ -9,8 +9,13 @@ import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.plugins.annotations.ResolutionScope
 import org.apache.maven.project.MavenProject
+import org.codehaus.plexus.util.FileUtils
+import org.reflections.Reflections
+import org.reflections.scanners.ResourcesScanner
+import org.reflections.util.ConfigurationBuilder
 import java.io.File
 import java.nio.file.Files
+import java.util.regex.Pattern
 import java.util.stream.Collectors
 
 
@@ -67,14 +72,30 @@ class GraphQLClientMojo: AbstractMojo() {
         val baseTargetDir = File(project.build.directory, joinPath("graphql-schema", sourceDirName, basePackageDirName))
         val schema = File(baseTargetDir, "schema.json")
 
-        val apolloCli = File(project.basedir, joinPath("node_modules", "apollo-codegen", "lib", "cli.js"))
+        val nodeModules = File(project.build.directory, joinPath("apollo-codegen-node-modules", "node_modules"))
+        nodeModules.deleteRecursively()
+        nodeModules.mkdirs()
+
+        val nodeModuleResources = Reflections(ConfigurationBuilder().setScanners(ResourcesScanner())
+            .setUrls(javaClass.getResource("/node_modules")))
+            .getResources(Pattern.compile(".*"))
+
+        nodeModuleResources.map { "/$it" }.forEach { resource ->
+            val path = resource.replaceFirst("/node_modules/", "").replace(Regex("/"), File.separator)
+            val diskPath = File(nodeModules, path)
+            diskPath.parentFile.mkdirs()
+            FileUtils.copyURLToFile(javaClass.getResource(resource), diskPath)
+        }
+
+        val apolloCli = File(nodeModules, joinPath("apollo-codegen", "lib", "cli.js"))
+        apolloCli.setExecutable(true)
 
         if(!introspectionFile.isFile) {
             throw IllegalArgumentException("Introspection JSON not found: ${introspectionFile.absolutePath}")
         }
 
         if(!apolloCli.isFile) {
-            throw IllegalStateException("Apollo codegen cli not found at '${apolloCli.absolutePath}'.  Please run 'npm install apollo-codegen'")
+            throw IllegalStateException("Apollo codegen cli not found: '${apolloCli.absolutePath}'")
         }
 
         schema.parentFile.mkdirs()
@@ -88,7 +109,9 @@ class GraphQLClientMojo: AbstractMojo() {
 
         val arguments = listOf("generate", *queries.map { File(baseTargetDir, it.path).absolutePath }.toTypedArray(), "--target", "json", "--schema", introspectionFile.absolutePath, "--output", schema.absolutePath)
         log.info("Running apollo cli (${apolloCli.absolutePath}) with arguments: ${arguments.joinToString(" ")}")
-        val proc = ProcessBuilder(apolloCli.absolutePath, *arguments.toTypedArray())
+
+        val proc = ProcessBuilder("node", apolloCli.absolutePath, *arguments.toTypedArray())
+            .directory(nodeModules.parentFile)
             .inheritIO()
             .start()
 
