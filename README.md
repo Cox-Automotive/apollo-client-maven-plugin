@@ -6,6 +6,8 @@ A full usage example can be found in the [test project](https://github.com/Cox-A
 
 ### Getting Started
 
+**NOTE: This plugin requires a nodejs environment to execute the bundled apollo-codegen node module.**
+
 1. Add the apollo runtime library and guava to your project's depedencies:
     ```xml
     <dependency>
@@ -43,33 +45,7 @@ A full usage example can be found in the [test project](https://github.com/Cox-A
     1. Query file names must match the name of the query they contain
     2. Query files must end with `.graphql`
     3. Any subdirectories under `src/main/graphql` are treated as extra package names to append to `packageName` in the plugin config.
-5. Install `apollo-codegen` npm package: `$ npm install apollo-codegen`
-    * Optionally, you can install `apollo-codegen` with the [exec-maven-plugin](http://www.mojohaus.org/exec-maven-plugin/usage.html):
-        ```xml
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>1.6.0</version>
-            <executions>
-                <execution>
-                    <id>npm-install-apollo-codegen</id>
-                    <goals>
-                        <goal>exec</goal>
-                    </goals>
-                    <phase>initialize</phase>
-
-                    <configuration>
-                        <executable>npm</executable>
-                        <arguments>
-                            <argument>install</argument>
-                            <argument>apollo-codegen</argument>
-                        </arguments>
-                    </configuration>
-                </execution>
-            </executions>
-        </plugin>
-        ```
-6. Run `mvn clean generate-sources` to generate classes for your queries.
+5. Run `mvn clean generate-sources` to generate classes for your queries.
 
 ### Configuration Options
 
