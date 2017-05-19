@@ -102,4 +102,74 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>bintray</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jetbrains.dokka</groupId>
+                        <artifactId>dokka-maven-plugin</artifactId>
+                        <version>0.9.9</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>javadocJar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <developers>
+        <developer>
+            <name>Andrew Potter</name>
+            <email>Andrew.Potter@coxautoinc.com</email>
+            <organization>Cox Automotive</organization>
+            <organizationUrl>http://www.coxautoinc.com</organizationUrl>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>bintray</id>
+            <url>https://api.bintray.com/maven/apottere/maven/apollo-client-maven-plugin</url>
+        </snapshotRepository>
+
+        <!-- Released with: mvn release:clean release:prepare release:perform -B -e -Pbintray -->
+        <repository>
+            <id>bintray</id>
+            <url>https://api.bintray.com/maven/apottere/maven/apollo-client-maven-plugin/;publish=1</url>
+        </repository>
+    </distributionManagement>
+    <scm>
+        <connection>scm:git:git://github.com/Cox-Automotive/apollo-client-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:Cox-Automotive/apollo-client-maven-plugin.git</developerConnection>
+        <url>http://github.com/Cox-Automotive/apollo-client-maven-plugin</url>
+        <tag>HEAD</tag>
+    </scm>
 </project>
