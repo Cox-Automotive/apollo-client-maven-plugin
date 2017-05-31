@@ -27,7 +27,7 @@ A full usage example can be found in the [test project](https://github.com/Cox-A
     <plugin>
         <groupId>com.coxautodev</groupId>
         <artifactId>java-graphql-client-maven-plugin</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <executions>
             <execution>
                 <goals>
