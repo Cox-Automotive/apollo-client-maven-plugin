@@ -34,7 +34,7 @@ A full usage example can be found in the [test project](https://github.com/Cox-A
                     <goal>generate</goal>
                 </goals>
                 <configuration>
-                    <packageName>com.my.package.graphql.client</packageName>
+                    <basePackage>com.my.package.graphql.client</basePackage>
                 </configuration>
             </execution>
         </executions>
