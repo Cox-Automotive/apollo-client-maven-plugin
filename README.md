@@ -13,13 +13,7 @@ A full usage example can be found in the [test project](https://github.com/Cox-A
     <dependency>
         <groupId>com.apollographql.apollo</groupId>
         <artifactId>apollo-runtime</artifactId>
-        <version>0.3.0</version>
-    </dependency>
-    <!-- Guava "Optional" used when generating queries with Apollo -->
-    <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>21.0</version>
+        <version>0.4.0</version>
     </dependency>
     ```
 2. Add the code generator plugin to your project's build (if codegen is desired):
@@ -27,7 +21,7 @@ A full usage example can be found in the [test project](https://github.com/Cox-A
     <plugin>
         <groupId>com.coxautodev</groupId>
         <artifactId>java-graphql-client-maven-plugin</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
         <executions>
             <execution>
                 <goals>
@@ -83,4 +77,4 @@ if(data.isPresent()) {
 }
 ```
 
-Properties specified as nullable in the schema will have an `Optional` type.
+Properties specified as nullable in the schema will have an java 8 `java.util.optional` type.

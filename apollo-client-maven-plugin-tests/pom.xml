@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>apollo-client-maven-plugin-tests</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -21,12 +21,7 @@
         <dependency>
             <groupId>com.apollographql.apollo</groupId>
             <artifactId>apollo-runtime</artifactId>
-            <version>0.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>21.0</version>
+            <version>0.4.0</version>
         </dependency>
 
         <dependency>
@@ -66,7 +61,7 @@
             <plugin>
                 <groupId>com.coxautodev</groupId>
                 <artifactId>apollo-client-maven-plugin</artifactId>
-                <version>1.0.1-SNAPSHOT</version>
+                <version>1.1.0-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <goals>

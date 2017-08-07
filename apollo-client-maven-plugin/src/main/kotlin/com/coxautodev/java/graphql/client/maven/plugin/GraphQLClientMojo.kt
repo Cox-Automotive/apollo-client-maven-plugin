@@ -1,7 +1,7 @@
 package com.coxautodev.java.graphql.client.maven.plugin
 
-import com.apollographql.android.compiler.GraphQLCompiler
-import com.apollographql.android.compiler.NullableValueType
+import com.apollographql.apollo.compiler.GraphQLCompiler
+import com.apollographql.apollo.compiler.NullableValueType
 import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.plugin.MojoExecutionException
 import org.apache.maven.plugins.annotations.LifecyclePhase
@@ -120,7 +120,7 @@ class GraphQLClientMojo: AbstractMojo() {
         }
 
         val compiler = GraphQLCompiler()
-        compiler.write(GraphQLCompiler.Arguments(schema, outputDirectory, mapOf(), NullableValueType.GUAVA_OPTIONAL, true))
+        compiler.write(GraphQLCompiler.Arguments(schema, outputDirectory, mapOf(), NullableValueType.JAVA_OPTIONAL, true, true))
 
         if(addSourceRoot ?: return) {
             project.addCompileSourceRoot(outputDirectory.absolutePath)
