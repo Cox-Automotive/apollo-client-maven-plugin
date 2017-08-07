@@ -6,6 +6,10 @@
     <version>1.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <name>apollo-client-maven-plugin-parent</name>
+    <description>Parent Pom for Apollo GraphQL Client Maven Plugin</description>
+    <url>https://github.com/Cox-Automotive/apollo-client-maven-plugin</url>
+
     <properties>
         <kotlin.version>1.1.2-2</kotlin.version>
         <java.version>1.8</java.version>

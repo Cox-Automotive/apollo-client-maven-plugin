@@ -12,7 +12,9 @@
     <version>1.1.1-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
-    <name>Maven plugin for generating graphql clients</name>
+    <name>apollo-client-maven-plugin</name>
+    <description>Maven plugin for generating graphql clients</description>
+    <url>https://github.com/Cox-Automotive/apollo-client-maven-plugin</url>
 
     <dependencies>
         <dependency>
