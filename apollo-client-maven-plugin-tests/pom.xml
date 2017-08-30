@@ -4,12 +4,12 @@
     <parent>
         <groupId>com.coxautodev</groupId>
         <artifactId>apollo-client-maven-plugin-parent</artifactId>
-        <version>1.1.2-SNAPSHOT</version>
+        <version>1.1.2</version>
         <relativePath>..</relativePath>
     </parent>
 
     <artifactId>apollo-client-maven-plugin-tests</artifactId>
-    <version>1.1.2-SNAPSHOT</version>
+    <version>1.1.2</version>
     <packaging>jar</packaging>
 
     <name>apollo-client-maven-plugin-tests</name>
@@ -65,7 +65,7 @@
             <plugin>
                 <groupId>com.coxautodev</groupId>
                 <artifactId>apollo-client-maven-plugin</artifactId>
-                <version>1.1.2-SNAPSHOT</version>
+                <version>1.1.2</version>
                 <executions>
                     <execution>
                         <goals>
