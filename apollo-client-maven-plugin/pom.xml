@@ -35,8 +35,8 @@
 
         <dependency>
             <groupId>com.apollographql.apollo</groupId>
-            <artifactId>compiler</artifactId>
-            <version>0.4.0</version>
+            <artifactId>apollo-compiler</artifactId>
+            <version>0.4.4</version>
         </dependency>
 
         <dependency>
