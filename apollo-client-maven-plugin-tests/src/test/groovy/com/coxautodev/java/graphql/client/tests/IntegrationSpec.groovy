@@ -1,9 +1,11 @@
 package com.coxautodev.java.graphql.client.tests
 
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.CustomTypeAdapter
 import com.coxautodev.graphql.tools.SchemaParser
 import com.coxautodev.java.graphql.client.tests.queries.GetBooksQuery
 import com.coxautodev.java.graphql.client.tests.queries.author.GetAuthorsQuery
+import com.coxautodev.java.graphql.client.tests.type.CustomType
 import com.fasterxml.jackson.databind.ObjectMapper
 import graphql.execution.SimpleExecutionStrategy
 import graphql.servlet.GraphQLServlet
@@ -61,8 +63,21 @@ class IntegrationSpec extends Specification {
         server.start()
         port = ((InetSocketAddress) server.getListenerInfo().get(0).getAddress()).getPort()
 
+        CustomTypeAdapter<Long> longCustomTypeAdapter = new CustomTypeAdapter<Long>() {
+            @Override
+            Long decode(final String value) {
+                return Long.valueOf(value)
+            }
+
+            @Override
+            String encode(final Long value) {
+                return String.valueOf(value)
+            }
+        }
+
         client = ApolloClient.builder()
             .serverUrl("http://127.0.0.1:$port/graphql")
+            .addCustomTypeAdapter(CustomType.LONG, longCustomTypeAdapter)
             .okHttpClient(new OkHttpClient())
             .build()
     }
@@ -91,8 +106,11 @@ class IntegrationSpec extends Specification {
     }
 
     def "generated book query returns data"() {
-        expect:
-            client.newCall(new GetBooksQuery()).execute().data().get().books().size() == 4
+        when:
+            def books = client.newCall(new GetBooksQuery()).execute().data().get().books()
+        then:
+            books.size() == 4
+            books.each { b -> assert b.id() instanceof Long}
     }
 
     def "generated author query returns data"() {

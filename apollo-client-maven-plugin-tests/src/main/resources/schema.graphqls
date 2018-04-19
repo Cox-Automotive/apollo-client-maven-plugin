@@ -6,6 +6,7 @@ type Query {
 type Book {
     title: String!
     author: Author!
+    id: Long!
 }
 
 type Author {

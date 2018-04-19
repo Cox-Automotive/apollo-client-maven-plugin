@@ -45,12 +45,16 @@ class GraphQLClientMojo: AbstractMojo() {
     @Parameter(readonly = true, required = true, defaultValue = "\${project}")
     private var project: MavenProject? = null
 
+    @Parameter(property = "customTypeMap")
+    private var customTypeMap: Map<String, String> = mapOf()
+
     @Throws(MojoExecutionException::class)
     override fun execute() {
         val project = this.project!!
         val outputDirectory = this.outputDirectory!!
         val basePackage = this.basePackage!!
         val introspectionFile = this.introspectionFile!!
+        val customTypeMap = this.customTypeMap
 
         val basePackageDirName = basePackage.replace('.', File.separatorChar)
         val sourceDirName = joinPath("src", "main", "graphql")
@@ -128,7 +132,7 @@ class GraphQLClientMojo: AbstractMojo() {
         }
 
         val compiler = GraphQLCompiler()
-        compiler.write(GraphQLCompiler.Arguments(schema, outputDirectory, mapOf(), NullableValueType.JAVA_OPTIONAL, true, true))
+        compiler.write(GraphQLCompiler.Arguments(schema, outputDirectory, customTypeMap, NullableValueType.JAVA_OPTIONAL, true, true))
 
         if(addSourceRoot == true) {
             project.addCompileSourceRoot(outputDirectory.absolutePath)

@@ -16,10 +16,10 @@ class Query implements GraphQLRootResolver {
 
         authors.addAll(dickens, twain)
         books.addAll(
-            new Book(title: "A Christmas Carol", author: dickens),
-            new Book(title: "David Copperfield", author: dickens),
-            new Book(title: "The Adventures of Tom Sawyer", author: twain),
-            new Book(title: "Adventures of Huckleberry Finn", author: twain),
+            new Book(title: "A Christmas Carol", author: dickens, id: 1L),
+            new Book(title: "David Copperfield", author: dickens, id: 2L),
+            new Book(title: "The Adventures of Tom Sawyer", author: twain, id: 3L),
+            new Book(title: "Adventures of Huckleberry Finn", author: twain, id: 4L),
         )
     }
 
@@ -34,6 +34,7 @@ class Query implements GraphQLRootResolver {
     static class Book {
         private String title
         private Author author
+        private Long id
 
         String getTitle() {
             return title
@@ -41,6 +42,10 @@ class Query implements GraphQLRootResolver {
 
         Author getAuthor() {
             return author
+        }
+
+        Long getId() {
+            return id
         }
     }
 
