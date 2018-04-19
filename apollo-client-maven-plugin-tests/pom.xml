@@ -72,6 +72,9 @@
                         </goals>
                         <configuration>
                             <basePackage>com.coxautodev.java.graphql.client.tests</basePackage>
+                            <customTypeMap>
+                                <Long>java.lang.Long</Long>
+                            </customTypeMap>
                         </configuration>
                     </execution>
                 </executions>

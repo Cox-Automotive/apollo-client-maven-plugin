@@ -50,9 +50,21 @@ All plugin options and their defaults:
     <basePackage>com.example.graphql.client</basePackage>
     <schemaFile>${project.basedir}/src/main/graphql/schema.json</schemaFile>
     <addSourceRoot>true</addSourceRoot>
+    <customTypeMap></customTypeMap>
 </configuration>
 ```
 
+#### Custom Types 
+To use the [Custom Scalar Types](https://github.com/apollographql/apollo-android#custom-scalar-types) you need to 
+define mapping configuration then register your custom adapter:  
+```xml
+<configuration>
+    ...
+    <customTypeMap>
+        <Long>java.lang.Long</Long>
+    </customTypeMap>
+</configuration>
+```
 ### Using the Client
 
 Assuming a file named `src/main/graphql/GetBooks.graphql` is defined that contains a query named `GetBooks` against the given `schema.json`, the following code demonstrates how that query could be executed.

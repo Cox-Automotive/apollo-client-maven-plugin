@@ -92,6 +92,21 @@
         },
         "isDeprecated" : false,
         "deprecationReason" : null
+      }, {
+        "name" : "id",
+        "description" : null,
+        "args" : [ ],
+        "type" : {
+          "kind" : "NON_NULL",
+          "name" : null,
+          "ofType" : {
+            "kind" : "SCALAR",
+            "name" : "Long",
+            "ofType" : null
+          }
+        },
+        "isDeprecated" : false,
+        "deprecationReason" : null
       } ],
       "inputFields" : null,
       "interfaces" : [ ],
@@ -101,6 +116,15 @@
       "kind" : "SCALAR",
       "name" : "String",
       "description" : "Built-in String",
+      "fields" : null,
+      "inputFields" : null,
+      "interfaces" : null,
+      "enumValues" : null,
+      "possibleTypes" : null
+    }, {
+      "kind" : "SCALAR",
+      "name" : "Long",
+      "description" : "Long type",
       "fields" : null,
       "inputFields" : null,
       "interfaces" : null,
