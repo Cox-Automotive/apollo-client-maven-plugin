@@ -81,7 +81,7 @@ class GraphQLClientMojo: AbstractMojo() {
             .getResources(Pattern.compile(".*"))
 
         nodeModuleResources.map { "/$it" }.forEach { resource ->
-            val path = resource.replaceFirst("/node_modules/", "").replace(Regex("/"), File.separator)
+            val path = resource.replaceFirst("/node_modules/", "").replace("/", File.separator)
             val diskPath = File(nodeModules, path)
             diskPath.parentFile.mkdirs()
             FileUtils.copyURLToFile(javaClass.getResource(resource), diskPath)
@@ -107,18 +107,10 @@ class GraphQLClientMojo: AbstractMojo() {
             src.copyTo(dest, overwrite = true)
         }
 
-        // https://stackoverflow.com/a/25080297
-        // https://stackoverflow.com/questions/32827329/how-to-get-the-full-path-of-an-executable-in-java-if-launched-from-windows-envi
-        val node = System.getenv("PATH")?.split(File.pathSeparator)?.map { File(it, "node") }?.find {
-            it.isFile && it.canExecute()
-        } ?: throw IllegalStateException("No 'node' executable found on PATH!")
-
-        log.info("Found node executable: ${node.absolutePath}")
-
         val arguments = listOf("generate", *queries.map { File(baseTargetDir, it.path).absolutePath }.toTypedArray(), "--target", "json", "--schema", introspectionFile.absolutePath, "--output", schema.absolutePath)
         log.info("Running apollo cli (${apolloCli.absolutePath}) with arguments: ${arguments.joinToString(" ")}")
 
-        val proc = ProcessBuilder(node.absolutePath, apolloCli.absolutePath, *arguments.toTypedArray())
+        val proc = ProcessBuilder("node", apolloCli.absolutePath, *arguments.toTypedArray())
             .directory(nodeModules.parentFile)
             .inheritIO()
             .start()
