@@ -1,4 +1,4 @@
-package com.coxautodev.java.graphql.client.maven.plugin
+package com.lahzouz.java.graphql.client.maven.plugin
 
 import com.apollographql.apollo.compiler.GraphQLCompiler
 import com.apollographql.apollo.compiler.NullableValueType

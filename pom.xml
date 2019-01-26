@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.coxautodev</groupId>
+    <groupId>com.lahzouz</groupId>
     <artifactId>apollo-client-maven-plugin-parent</artifactId>
     <version>1.1.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>apollo-client-maven-plugin-parent</name>
     <description>Parent Pom for Apollo GraphQL Client Maven Plugin</description>
-    <url>https://github.com/Cox-Automotive/apollo-client-maven-plugin</url>
+    <url>https://github.com/Sparow199/apollo-client-maven-plugin.git</url>
 
     <properties>
         <kotlin.version>1.1.2-2</kotlin.version>
