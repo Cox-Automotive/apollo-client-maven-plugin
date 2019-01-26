@@ -8,7 +8,7 @@
 
     <name>apollo-client-maven-plugin-parent</name>
     <description>Parent Pom for Apollo GraphQL Client Maven Plugin</description>
-    <url>https://github.com/Sparow199/apollo-client-maven-plugin.git</url>
+    <url>https://github.com/Sparow199/apollo-client-maven-plugin</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -179,9 +179,9 @@
         </repository>
     </distributionManagement>
     <scm>
-        <connection>scm:git:git://github.com/Sparow199/apollo-client-maven-plugin.git</connection>
+        <connection>scm:git:git@github.com/Sparow199/apollo-client-maven-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:Sparow199/apollo-client-maven-plugin.git</developerConnection>
-        <url>http://github.com/Sparow199/apollo-client-maven-plugin</url>
+        <url>https://github.com/Sparow199/apollo-client-maven-plugin</url>
         <tag>HEAD</tag>
     </scm>
 </project>
