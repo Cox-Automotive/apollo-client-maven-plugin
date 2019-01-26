@@ -13,30 +13,30 @@
 
     <name>apollo-client-maven-plugin-tests</name>
     <description>Test for maven plugin</description>
-    <url>https://github.com/Cox-Automotive/apollo-client-maven-plugin</url>
+    <url>https://github.com/Sparow199/apollo-client-maven-plugin.git</url>
 
     <properties>
         <maven.install.skip>true</maven.install.skip>
-        <undertow.version>1.4.14.Final</undertow.version>
+        <undertow.version>2.0.17.Final</undertow.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.apollographql.apollo</groupId>
             <artifactId>apollo-runtime</artifactId>
-            <version>0.4.0</version>
+            <version>0.4.1</version>
         </dependency>
 
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java-tools</artifactId>
-            <version>2.2.0</version>
+            <version>5.2.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java-servlet</artifactId>
-            <version>3.0.1</version>
+            <version>6.1.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -54,7 +54,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>4.3.8.RELEASE</version>
+            <version>5.1.4.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -62,7 +68,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.coxautodev</groupId>
+                <groupId>com.lahzouz</groupId>
                 <artifactId>apollo-client-maven-plugin</artifactId>
                 <version>1.1.3-SNAPSHOT</version>
                 <executions>
@@ -71,7 +77,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <basePackage>com.coxautodev.java.graphql.client.tests</basePackage>
+                            <basePackage>com.lahzouz.java.graphql.client.tests</basePackage>
                             <customTypeMap>
                                 <Long>java.lang.Long</Long>
                             </customTypeMap>

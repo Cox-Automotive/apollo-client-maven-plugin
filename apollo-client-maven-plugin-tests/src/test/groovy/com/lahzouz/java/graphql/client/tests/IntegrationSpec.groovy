@@ -1,15 +1,18 @@
-package com.coxautodev.java.graphql.client.tests
+package com.lahzouz.java.graphql.client.tests
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.CustomTypeAdapter
 import com.coxautodev.graphql.tools.SchemaParser
-import com.coxautodev.java.graphql.client.tests.queries.GetBooksQuery
-import com.coxautodev.java.graphql.client.tests.queries.author.GetAuthorsQuery
-import com.coxautodev.java.graphql.client.tests.type.CustomType
+import com.lahzouz.java.graphql.client.tests.queries.GetBooksQuery
+import com.lahzouz.java.graphql.client.tests.queries.author.GetAuthorsQuery
+import com.lahzouz.java.graphql.client.tests.type.CustomType
 import com.fasterxml.jackson.databind.ObjectMapper
-import graphql.execution.SimpleExecutionStrategy
-import graphql.servlet.GraphQLServlet
-import graphql.servlet.SimpleGraphQLServlet
+import graphql.schema.GraphQLSchema
+import graphql.schema.idl.RuntimeWiring
+import graphql.servlet.DefaultGraphQLSchemaProvider
+import graphql.servlet.GraphQLInvocationInputFactory
+import graphql.servlet.GraphQLSchemaProvider
+import graphql.servlet.SimpleGraphQLHttpServlet
 import io.undertow.Undertow
 import io.undertow.servlet.Servlets
 import io.undertow.servlet.api.DeploymentInfo
@@ -38,22 +41,20 @@ class IntegrationSpec extends Specification {
     ApolloClient client
 
     def setupSpec() {
-        GraphQLServlet servlet = new SimpleGraphQLServlet(
-            SchemaParser.newParser()
+
+        GraphQLSchema libSchema = SchemaParser.newParser()
                 .file('schema.graphqls')
                 .resolvers(new Query())
-                .dataClasses(Query.Book, Query.Author)
                 .build()
-                .makeExecutableSchema(),
+                .makeExecutableSchema()
 
-            new SimpleExecutionStrategy()
-        )
+        SimpleGraphQLHttpServlet servlet = createServlet(libSchema)
 
         DeploymentInfo servletBuilder = Servlets.deployment()
             .setClassLoader(getClass().getClassLoader())
             .setContextPath("/")
             .setDeploymentName("test")
-            .addServlets(Servlets.servlet("GraphQLServlet", GraphQLServlet, new ImmediateInstanceFactory<Servlet>(servlet)).addMapping("/graphql/*"))
+            .addServlets(Servlets.servlet("GraphQLServlet", SimpleGraphQLHttpServlet, new ImmediateInstanceFactory<Servlet>(servlet)).addMapping("/graphql/*"))
 
         DeploymentManager manager = Servlets.defaultContainer().addDeployment(servletBuilder)
         manager.deploy()
@@ -117,4 +118,11 @@ class IntegrationSpec extends Specification {
         expect:
             client.newCall(new GetAuthorsQuery()).execute().data().get().authors().size() == 2
     }
+
+    SimpleGraphQLHttpServlet createServlet(GraphQLSchema schema) {
+        GraphQLSchemaProvider schemaProvider = new DefaultGraphQLSchemaProvider(schema)
+        GraphQLInvocationInputFactory invocationInputFactory = GraphQLInvocationInputFactory.newBuilder(schemaProvider).build()
+        return SimpleGraphQLHttpServlet.newBuilder(invocationInputFactory).build()
+    }
+
 }

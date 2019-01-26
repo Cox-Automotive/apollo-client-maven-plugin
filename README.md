@@ -13,15 +13,15 @@ A full usage example can be found in the [test project](https://github.com/Cox-A
     <dependency>
         <groupId>com.apollographql.apollo</groupId>
         <artifactId>apollo-runtime</artifactId>
-        <version>0.4.0</version>
+        <version>0.4.1</version>
     </dependency>
     ```
 2. Add the code generator plugin to your project's build (if codegen is desired):
     ```xml
     <plugin>
-        <groupId>com.coxautodev</groupId>
+        <groupId>com.lahzouz</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.3</version>
         <executions>
             <execution>
                 <goals>

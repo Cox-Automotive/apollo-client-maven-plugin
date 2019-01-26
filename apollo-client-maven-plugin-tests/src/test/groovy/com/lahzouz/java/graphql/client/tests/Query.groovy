@@ -1,11 +1,11 @@
-package com.coxautodev.java.graphql.client.tests
+package com.lahzouz.java.graphql.client.tests
 
-import com.coxautodev.graphql.tools.GraphQLRootResolver
+import com.coxautodev.graphql.tools.GraphQLQueryResolver
 
 /**
  * @author Andrew Potter
  */
-class Query implements GraphQLRootResolver {
+class Query implements GraphQLQueryResolver {
 
     private List<Book> books = []
     private List<Author> authors = []
