@@ -1,8 +1,8 @@
 # Apollo GraphQL Client Code Generation Maven Plugin
-
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![CircleCI](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin.svg?style=svg)](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin)
 ## Usage
 
-A full usage example can be found in the [test project](https://github.com/Cox-Automotive/apollo-client-maven-plugin/tree/master/apollo-client-maven-plugin-tests)
+A full usage example can be found in the [test project](https://github.com/sparow199/apollo-client-maven-plugin/tree/master/apollo-client-maven-plugin-tests)
 
 ### Getting Started
 
@@ -90,3 +90,12 @@ if(data.isPresent()) {
 ```
 
 Properties specified as nullable in the schema will have an java 8 `java.util.optional` type.
+
+# Contributors
+
+* Andrew Potter => apottere
+* William Yu => wiyu
+* Moncef AOUDIA => sparow199
+* ryangardner => Ryan Gardner
+* Unknown => ddekkers
+* Unknown => mgrossmanexp

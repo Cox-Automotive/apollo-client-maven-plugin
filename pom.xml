@@ -11,6 +11,8 @@
     <url>https://github.com/Sparow199/apollo-client-maven-plugin.git</url>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <kotlin.version>1.3</kotlin.version>
         <kotlin-library.version>1.3.20</kotlin-library.version>
         <java.version>1.8</java.version>

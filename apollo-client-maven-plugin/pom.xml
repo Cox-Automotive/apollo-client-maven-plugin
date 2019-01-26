@@ -11,6 +11,11 @@
     <artifactId>apollo-client-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <name>apollo-client-maven-plugin</name>
     <description>Maven plugin for generating graphql clients</description>
     <url>https://github.com/Sparow199/apollo-client-maven-plugin.git</url>

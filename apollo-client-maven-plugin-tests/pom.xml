@@ -16,6 +16,8 @@
     <url>https://github.com/Sparow199/apollo-client-maven-plugin.git</url>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.install.skip>true</maven.install.skip>
         <undertow.version>2.0.17.Final</undertow.version>
     </properties>
