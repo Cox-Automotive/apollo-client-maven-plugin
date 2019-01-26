@@ -11,7 +11,8 @@
     <url>https://github.com/Sparow199/apollo-client-maven-plugin.git</url>
 
     <properties>
-        <kotlin.version>1.1.2-2</kotlin.version>
+        <kotlin.version>1.3</kotlin.version>
+        <kotlin-library.version>1.3.20</kotlin-library.version>
         <java.version>1.8</java.version>
 
         <!--This contends with dokka and creates two javadoc jars...-->
@@ -27,30 +28,24 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
-            <version>${kotlin.version}</version>
+            <version>${kotlin-library.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
-            <version>1.0-groovy-2.4</version>
+            <version>1.2-groovy-2.5</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>2.4.7</version>
         </dependency>
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
-            <version>3.2.4</version>
+            <version>3.2.10</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.objenesis</groupId>
             <artifactId>objenesis</artifactId>
-            <version>2.5.1</version>
+            <version>3.0.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -62,7 +57,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -71,7 +66,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>${kotlin.version}</version>
+                <version>${kotlin-library.version}</version>
                 <executions>
                     <execution>
                         <id>compile</id>
@@ -85,11 +80,11 @@
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.5</version>
+                <version>1.6.2</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>testCompile</goal>
+                            <goal>compileTests</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -128,7 +123,7 @@
                     <plugin>
                         <groupId>org.jetbrains.dokka</groupId>
                         <artifactId>dokka-maven-plugin</artifactId>
-                        <version>0.9.9</version>
+                        <version>0.9.17</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
@@ -143,12 +138,24 @@
         </profile>
     </profiles>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <developers>
         <developer>
             <name>Andrew Potter</name>
             <email>Andrew.Potter@coxautoinc.com</email>
             <organization>Cox Automotive</organization>
             <organizationUrl>http://www.coxautoinc.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Moncef AOUDIA</name>
+            <email>mf.aoudia@gmail.com</email>
         </developer>
     </developers>
     <licenses>
@@ -160,19 +167,19 @@
     <distributionManagement>
         <snapshotRepository>
             <id>bintray</id>
-            <url>https://api.bintray.com/maven/apottere/maven/apollo-client-maven-plugin</url>
+            <url>https://api.bintray.com/maven/sparow199/maven/apollo-client-maven-plugin</url>
         </snapshotRepository>
 
         <!-- Released with: mvn release:clean release:prepare release:perform -B -e -Pbintray -->
         <repository>
             <id>bintray</id>
-            <url>https://api.bintray.com/maven/apottere/maven/apollo-client-maven-plugin/;publish=1</url>
+            <url>https://api.bintray.com/maven/sparow199/maven/apollo-client-maven-plugin/;publish=1</url>
         </repository>
     </distributionManagement>
     <scm>
-        <connection>scm:git:git://github.com/Cox-Automotive/apollo-client-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:Cox-Automotive/apollo-client-maven-plugin.git</developerConnection>
-        <url>http://github.com/Cox-Automotive/apollo-client-maven-plugin</url>
+        <connection>scm:git:git://github.com/Sparow199/apollo-client-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:Sparow199/apollo-client-maven-plugin.git</developerConnection>
+        <url>http://github.com/Sparow199/apollo-client-maven-plugin</url>
         <tag>HEAD</tag>
     </scm>
 </project>
