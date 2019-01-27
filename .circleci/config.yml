@@ -1,15 +1,12 @@
 version: 2
 jobs:
   build:
-    machine: true
     docker:
       - image: circleci/openjdk:8-jdk
-    working_directory: /home/circleci/apollo-client-maven-plugin
+    working_directory: ~/apollo-client-maven-plugin
     environment:
       MAVEN_OPTS: -Xmx3200m
     steps:
-      - attach_workspace:
-          at: /home/circleci
       - checkout
       - run:
           name: install node via NVM
@@ -34,24 +31,53 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
-      - run: mvn dependency:go-offline
+      - run: |
+          mvn dependency:resolve-plugins
+          mvn dependency:go-offline || true
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run: mvn integration-test
+      - run: mvn test integration-test
+
   deploy:
-    machine: true
-    working_directory: /home/circleci/apollo-client-maven-plugin
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/apollo-client-maven-plugin
     environment:
       MAVEN_OPTS: -Xmx3200m
     steps:
-      - attach_workspace:
-          at: /home/circleci
+      - checkout
+      - run:
+          name: install node via NVM
+          command: |
+            wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+            # Activate nvm
+            export NVM_DIR=$HOME/.nvm
+            touch $HOME/.nvmrc
+            source $NVM_DIR/nvm.sh
+            # Use node 8.9
+            nvm install 8.9 && nvm alias default 8.9
+            echo 8.9 > $HOME/.nvmrc
+            # Enable nvm in following steps
+            echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
+            echo 'source $NVM_DIR/nvm.sh' >> $BASH_ENV
+            # To fix npm install : "node-pre-gyp: Permission denied"
+            npm config set user 0
+            npm config set unsafe-perm true
+            node --version
+            npm --version
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
+      - run: |
+          mvn dependency:resolve-plugins
+          mvn dependency:go-offline || true
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
       - run:
           name: Deploy the artifacts
           command: |
@@ -61,18 +87,18 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build
-      branches:
-        only:
-          - master
-          - develop
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
       - deploy:
           requires:
             - build
-            filters:
-              tags:
-                only: /v.*/
-              branches:
-                only:
-                  - master
-
+          filters:
+            tags:
+              only: /v.*/
+            branches:
+              only:
+                - master
