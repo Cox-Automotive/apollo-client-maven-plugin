@@ -3,7 +3,7 @@
 
     <groupId>com.lahzouz</groupId>
     <artifactId>apollo-client-maven-plugin-parent</artifactId>
-    <version>1.1.3-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>apollo-client-maven-plugin-parent</name>
@@ -19,7 +19,16 @@
 
         <!--This contends with dokka and creates two javadoc jars...-->
         <maven.javadoc.skip>true</maven.javadoc.skip>
+        
+        <project.scm.id>Github</project.scm.id>
     </properties>
+
+    <scm>
+        <connection>scm:git:https://github.com/Sparow199/apollo-client-maven-plugin.git</connection>
+        <developerConnection>scm:git:https://github.com/Sparow199/apollo-client-maven-plugin.git</developerConnection>
+        <url>https://github.com/Sparow199/apollo-client-maven-plugin</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <modules>
         <module>apollo-client-maven-plugin</module>
@@ -168,20 +177,17 @@
     </licenses>
     <distributionManagement>
         <snapshotRepository>
-            <id>bintray</id>
+            <id>bintray-sparow199-maven</id>
+            <name>sparow199-maven</name>
             <url>https://api.bintray.com/maven/sparow199/maven/apollo-client-maven-plugin</url>
         </snapshotRepository>
 
         <!-- Released with: mvn release:clean release:prepare release:perform -B -e -Pbintray -->
         <repository>
-            <id>bintray</id>
+            <id>bintray-sparow199-maven</id>
+            <name>sparow199-maven</name>
             <url>https://api.bintray.com/maven/sparow199/maven/apollo-client-maven-plugin/;publish=1</url>
         </repository>
     </distributionManagement>
-    <scm>
-        <connection>scm:git:git@github.com/Sparow199/apollo-client-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:Sparow199/apollo-client-maven-plugin.git</developerConnection>
-        <url>https://github.com/Sparow199/apollo-client-maven-plugin</url>
-        <tag>HEAD</tag>
-    </scm>
+
 </project>

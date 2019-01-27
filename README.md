@@ -1,5 +1,5 @@
 # Apollo GraphQL Client Code Generation Maven Plugin
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![CircleCI](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin.svg?style=svg)](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin)
+[![CircleCI](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin.svg?style=svg)](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin) [ ![Download](https://api.bintray.com/packages/sparow199/maven/apollo-client-maven-plugin/images/download.svg) ](https://bintray.com/sparow199/maven/apollo-client-maven-plugin/_latestVersion)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 ## Usage
 
 A full usage example can be found in the [test project](https://github.com/sparow199/apollo-client-maven-plugin/tree/master/apollo-client-maven-plugin-tests)
@@ -21,7 +21,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <plugin>
         <groupId>com.lahzouz</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>1.1.3</version>
+        <version>1.2.0-SNAPSHOT</version>
         <executions>
             <execution>
                 <goals>
@@ -34,7 +34,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
         </executions>
     </plugin>
     ```
-3. Create a file `src/main/graphql/schema.json` with the JSON results of an [introspection query](https://gist.github.com/craigbeck/b90915d49fda19d5b2b17ead14dcd6da)
+3. Create a file `src/main/graphql/schema.json` with the JSON results of an [introspection query](https://gist.github.com/Sparow199/a59527016e16a2d56309d62e01ff2348)
 4. Create files for each query you'd like to generate classes for under `src/main/graphql`:
     1. Query file names must match the name of the query they contain
     2. Query files must end with `.graphql`
@@ -96,6 +96,6 @@ Properties specified as nullable in the schema will have an java 8 `java.util.op
 * Andrew Potter => apottere
 * William Yu => wiyu
 * Moncef AOUDIA => sparow199
-* ryangardner => Ryan Gardner
+* Ryan Gardner => ryangardner
 * Unknown => ddekkers
 * Unknown => mgrossmanexp
