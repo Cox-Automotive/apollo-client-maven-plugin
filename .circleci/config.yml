@@ -53,7 +53,7 @@ jobs:
       - run:
           name: Deploy the artifacts
           command: |
-            mvn -s ../.circleci.settings.xml -DskipTests deploy -P bintray
+            mvn -s ./.circleci/.circleci.settings.xml -DskipTests deploy -P bintray
 
 workflows:
   version: 2
