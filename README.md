@@ -19,7 +19,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
 2. Add the code generator plugin to your project's build (if codegen is desired):
     ```xml
     <plugin>
-        <groupId>com.lahzouz</groupId>
+        <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
         <version>1.2.1-SNAPSHOT</version>
         <executions>
