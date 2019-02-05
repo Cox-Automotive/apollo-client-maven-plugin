@@ -4,7 +4,6 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.response.CustomTypeAdapter
 import com.apollographql.apollo.response.CustomTypeValue
 import com.coxautodev.graphql.tools.SchemaParser
-import com.example.graphql.client.type.CustomType
 import com.fasterxml.jackson.databind.ObjectMapper
 import graphql.schema.GraphQLSchema
 import graphql.servlet.DefaultGraphQLSchemaProvider
