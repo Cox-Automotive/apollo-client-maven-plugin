@@ -3,7 +3,7 @@
 
     <groupId>com.github.sparow199</groupId>
     <artifactId>apollo-client-maven-plugin-parent</artifactId>
-    <version>1.2.2-snapshot</version>
+    <version>1.2.2</version>
     <packaging>pom</packaging>
 
     <name>apollo-client-maven-plugin-parent</name>
