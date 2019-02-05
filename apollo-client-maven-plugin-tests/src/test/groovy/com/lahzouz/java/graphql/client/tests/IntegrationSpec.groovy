@@ -1,14 +1,12 @@
 package com.lahzouz.java.graphql.client.tests
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.CustomTypeAdapter
+import com.apollographql.apollo.response.CustomTypeAdapter
+import com.apollographql.apollo.response.CustomTypeValue
 import com.coxautodev.graphql.tools.SchemaParser
-import com.lahzouz.java.graphql.client.tests.queries.GetBooksQuery
-import com.lahzouz.java.graphql.client.tests.queries.author.GetAuthorsQuery
-import com.lahzouz.java.graphql.client.tests.type.CustomType
+import com.example.graphql.client.type.CustomType
 import com.fasterxml.jackson.databind.ObjectMapper
 import graphql.schema.GraphQLSchema
-import graphql.schema.idl.RuntimeWiring
 import graphql.servlet.DefaultGraphQLSchemaProvider
 import graphql.servlet.GraphQLInvocationInputFactory
 import graphql.servlet.GraphQLSchemaProvider
@@ -20,6 +18,7 @@ import io.undertow.servlet.api.DeploymentManager
 import io.undertow.servlet.util.ImmediateInstanceFactory
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.jetbrains.annotations.NotNull
 import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Specification
@@ -65,14 +64,15 @@ class IntegrationSpec extends Specification {
         port = ((InetSocketAddress) server.getListenerInfo().get(0).getAddress()).getPort()
 
         CustomTypeAdapter<Long> longCustomTypeAdapter = new CustomTypeAdapter<Long>() {
+
             @Override
-            Long decode(final String value) {
-                return Long.valueOf(value)
+            Long decode(@NotNull CustomTypeValue value) {
+                return Long.valueOf(value as String)
             }
 
             @Override
-            String encode(final Long value) {
-                return String.valueOf(value)
+            CustomTypeValue encode(@NotNull Long value) {
+                return String.valueOf(value) as CustomTypeValue
             }
         }
 

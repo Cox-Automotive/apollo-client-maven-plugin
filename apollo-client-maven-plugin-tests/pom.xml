@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin-parent</artifactId>
-        <version>1.2.1</version>
+        <version>1.2.2-snapshot</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -23,10 +23,11 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>com.apollographql.apollo</groupId>
             <artifactId>apollo-runtime</artifactId>
-            <version>0.4.1</version>
+            <version>1.0.0-alpha5</version>
         </dependency>
 
         <dependency>
@@ -72,7 +73,7 @@
             <plugin>
                 <groupId>com.github.sparow199</groupId>
                 <artifactId>apollo-client-maven-plugin</artifactId>
-                <version>1.2.1</version>
+                <version>1.2.2-snapshot</version>
                 <executions>
                     <execution>
                         <goals>
@@ -80,6 +81,7 @@
                         </goals>
                         <configuration>
                             <basePackage>com.lahzouz.java.graphql.client.tests</basePackage>
+                            <outputPackage>com.lahzouz.java.graphql.client.tests</outputPackage>
                             <customTypeMap>
                                 <Long>java.lang.Long</Long>
                             </customTypeMap>
@@ -89,4 +91,11 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <url>https://jcenter.bintray.com/</url>
+        </repository>
+    </repositories>
 </project>

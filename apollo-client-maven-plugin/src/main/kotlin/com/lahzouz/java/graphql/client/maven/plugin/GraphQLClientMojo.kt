@@ -36,6 +36,9 @@ class GraphQLClientMojo: AbstractMojo() {
     @Parameter(property = "basePackage", defaultValue = "com.example.graphql.client")
     private var basePackage: String? = null
 
+    @Parameter(property = "outputPackage", defaultValue = "com.example.graphql.client")
+    private var outputPackage: String? = null
+
     @Parameter(property = "introspectionFile", defaultValue = "\${project.basedir}/src/main/graphql/schema.json")
     private var introspectionFile: File? = null
 
@@ -53,6 +56,7 @@ class GraphQLClientMojo: AbstractMojo() {
         val project = this.project!!
         val outputDirectory = this.outputDirectory!!
         val basePackage = this.basePackage!!
+        val outputPackage = this.basePackage!!
         val introspectionFile = this.introspectionFile!!
         val customTypeMap = this.customTypeMap
 
@@ -124,7 +128,8 @@ class GraphQLClientMojo: AbstractMojo() {
         }
 
         val compiler = GraphQLCompiler()
-        compiler.write(GraphQLCompiler.Arguments(schema, outputDirectory, customTypeMap, NullableValueType.JAVA_OPTIONAL, generateAccessors = true, useSemanticNaming = true, generateModelBuilder = true))
+        compiler.write(GraphQLCompiler.Arguments(schema, outputDirectory, customTypeMap, NullableValueType.JAVA_OPTIONAL,
+                useSemanticNaming = true, generateModelBuilder = true, suppressRawTypesWarning = true, useJavaBeansSemanticNaming = true, outputPackageName = outputPackage))
 
         if(addSourceRoot == true) {
             project.addCompileSourceRoot(outputDirectory.absolutePath)

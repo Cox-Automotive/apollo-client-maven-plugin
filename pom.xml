@@ -3,7 +3,7 @@
 
     <groupId>com.github.sparow199</groupId>
     <artifactId>apollo-client-maven-plugin-parent</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2-snapshot</version>
     <packaging>pom</packaging>
 
     <name>apollo-client-maven-plugin-parent</name>
@@ -182,7 +182,7 @@
             <url>https://api.bintray.com/maven/sparow199/maven/apollo-client-maven-plugin</url>
         </snapshotRepository>
 
-        <!-- Released with: mvn release:clean release:prepare release:perform -B -e -Pbintray -->
+        <!-- Released with: mvn release:clean release:prepare release:perform -B -e -P bintray -->
         <repository>
             <id>bintray-sparow199-maven</id>
             <name>sparow199-maven</name>
@@ -190,4 +190,10 @@
         </repository>
     </distributionManagement>
 
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <url>https://jcenter.bintray.com/</url>
+        </repository>
+    </repositories>
 </project>

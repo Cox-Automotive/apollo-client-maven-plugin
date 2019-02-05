@@ -13,7 +13,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <dependency>
         <groupId>com.apollographql.apollo</groupId>
         <artifactId>apollo-runtime</artifactId>
-        <version>0.4.1</version>
+        <version>1.0.0-alpha5</version>
     </dependency>
     ```
 2. Add the code generator plugin to your project's build (if codegen is desired):
@@ -21,7 +21,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <plugin>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>1.2.1</version>
+        <version>1.2.2-snapshot</version>
         <executions>
             <execution>
                 <goals>
@@ -48,6 +48,7 @@ All plugin options and their defaults:
 <configuration>
     <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
     <basePackage>com.example.graphql.client</basePackage>
+    <outputPackage>com.example.graphql.client</basePackage>
     <schemaFile>${project.basedir}/src/main/graphql/schema.json</schemaFile>
     <addSourceRoot>true</addSourceRoot>
     <customTypeMap></customTypeMap>
