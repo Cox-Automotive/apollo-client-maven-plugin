@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin-parent</artifactId>
-        <version>1.2.2</version>
+        <version>1.2.3-snapshot</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -66,6 +66,7 @@
             <version>1.7.25</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -73,7 +74,7 @@
             <plugin>
                 <groupId>com.github.sparow199</groupId>
                 <artifactId>apollo-client-maven-plugin</artifactId>
-                <version>1.2.2</version>
+                <version>1.2.3-snapshot</version>
                 <executions>
                     <execution>
                         <goals>
@@ -82,6 +83,12 @@
                         <configuration>
                             <basePackage>com.lahzouz.java.graphql.client.tests</basePackage>
                             <outputPackage>com.lahzouz.java.graphql.client.tests</outputPackage>
+                            <addSourceRoot>true</addSourceRoot>
+                            <generateModelBuilder>true</generateModelBuilder>
+                            <useJavaBeansSemanticNaming>true</useJavaBeansSemanticNaming>
+                            <useSemanticNaming>true</useSemanticNaming>
+                            <nullableValueType>JAVA_OPTIONAL</nullableValueType>
+                            <suppressRawTypesWarning>false</suppressRawTypesWarning>
                             <customTypeMap>
                                 <Long>java.lang.Long</Long>
                             </customTypeMap>

@@ -51,12 +51,33 @@ class GraphQLClientMojo: AbstractMojo() {
     @Parameter(property = "customTypeMap")
     private var customTypeMap: Map<String, String> = mapOf()
 
+    @Parameter(property = "nullableValueType")
+        private var nullableValueType: NullableValueType = NullableValueType.JAVA_OPTIONAL
+
+    @Parameter(property = "useSemanticNaming")
+    private var useSemanticNaming: Boolean = true
+
+    @Parameter(property = "generateModelBuilder")
+    private var generateModelBuilder: Boolean = true
+
+    @Parameter(property = "suppressRawTypesWarning")
+    private var suppressRawTypesWarning: Boolean = false
+
+    @Parameter(property = "useJavaBeansSemanticNaming")
+    private var useJavaBeansSemanticNaming: Boolean = false
+
+
     @Throws(MojoExecutionException::class)
     override fun execute() {
         val project = this.project!!
         val outputDirectory = this.outputDirectory!!
         val basePackage = this.basePackage!!
         val outputPackage = this.basePackage!!
+        val nullableValueType = this.nullableValueType
+        val useSemanticNaming = this.useSemanticNaming
+        val generateModelBuilder = this.generateModelBuilder
+        val suppressRawTypesWarning = this.suppressRawTypesWarning
+        val useJavaBeansSemanticNaming = this.useJavaBeansSemanticNaming
         val introspectionFile = this.introspectionFile!!
         val customTypeMap = this.customTypeMap
 
@@ -128,8 +149,12 @@ class GraphQLClientMojo: AbstractMojo() {
         }
 
         val compiler = GraphQLCompiler()
-        compiler.write(GraphQLCompiler.Arguments(irFile = schema, outputDir = outputDirectory, customTypeMap = customTypeMap, nullableValueType = NullableValueType.JAVA_OPTIONAL,
-                useSemanticNaming = true, generateModelBuilder = true, suppressRawTypesWarning = false, useJavaBeansSemanticNaming = true, outputPackageName = outputPackage))
+        compiler.write(GraphQLCompiler.Arguments(irFile = schema, outputDir = outputDirectory,
+                customTypeMap = customTypeMap, nullableValueType = nullableValueType,
+                useSemanticNaming = useSemanticNaming, generateModelBuilder = generateModelBuilder,
+                suppressRawTypesWarning = suppressRawTypesWarning,
+                useJavaBeansSemanticNaming = useJavaBeansSemanticNaming,
+                outputPackageName = outputPackage))
 
         if(addSourceRoot == true) {
             project.addCompileSourceRoot(outputDirectory.absolutePath)

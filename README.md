@@ -1,5 +1,8 @@
 # Apollo GraphQL Client Code Generation Maven Plugin
-[![CircleCI](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin.svg?style=svg)](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin) [ ![Download](https://api.bintray.com/packages/sparow199/maven/apollo-client-maven-plugin/images/download.svg) ](https://bintray.com/sparow199/maven/apollo-client-maven-plugin/_latestVersion)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+[![CircleCI](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin.svg?style=svg)](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin) 
+[![Download](https://api.bintray.com/packages/sparow199/maven/apollo-client-maven-plugin/images/download.svg) ](https://bintray.com/sparow199/maven/apollo-client-maven-plugin/_latestVersion)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/71b115f870bb44478dac5d05abc9f378)](https://app.codacy.com/app/Sparow199/apollo-client-maven-plugin?utm_source=github.com&utm_medium=referral&utm_content=Sparow199/apollo-client-maven-plugin&utm_campaign=Badge_Grade_Dashboard)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 ## Usage
 
 A full usage example can be found in the [test project](https://github.com/sparow199/apollo-client-maven-plugin/tree/master/apollo-client-maven-plugin-tests)
@@ -21,7 +24,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <plugin>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>1.2.2</version>
+        <version>1.2.3-snapshot</version>
         <executions>
             <execution>
                 <goals>
@@ -51,8 +54,24 @@ All plugin options and their defaults:
     <outputPackage>com.example.graphql.client</basePackage>
     <schemaFile>${project.basedir}/src/main/graphql/schema.json</schemaFile>
     <addSourceRoot>true</addSourceRoot>
+    <generateModelBuilder>true</generateModelBuilder>
+    <useJavaBeansSemanticNaming>true</useJavaBeansSemanticNaming>
+    <useSemanticNaming>true</useSemanticNaming>
+    <nullableValueType>JAVA_OPTIONAL</nullableValueType>
+    <suppressRawTypesWarning>false</suppressRawTypesWarning>
     <customTypeMap></customTypeMap>
 </configuration>
+```
+
+#### Nullable Types 
+Available nullable types:
+
+```java
+    ANNOTATED
+    APOLLO_OPTIONAL
+    GUAVA_OPTIONAL
+    JAVA_OPTIONAL
+    INPUT_TYPE
 ```
 
 #### Custom Types 
@@ -66,6 +85,7 @@ define mapping configuration then register your custom adapter:
     </customTypeMap>
 </configuration>
 ```
+
 ### Using the Client
 
 Assuming a file named `src/main/graphql/GetBooks.graphql` is defined that contains a query named `GetBooks` against the given `schema.json`, the following code demonstrates how that query could be executed.
@@ -83,11 +103,17 @@ ApolloClient client = ApolloClient.builder()
         .build())
     .build()
     
-Optional<GetBooks.Data> data = client.newCall(new GetBooks()).execute().data()
-
-if(data.isPresent()) {
-    System.out.println("Book count: " + data.get().books().size());
-}
+client.newCall(new GetBooks())
+    .enqueue(new ApolloCall.Callback<GetBooks.Data>() {
+    
+    @Override public void onResponse(@NotNull Response<GetBooks.Data> response) {
+        ...
+    }
+    
+    @Override public void onFailure(@NotNull Throwable t) {
+        ...
+    }
+    });
 ```
 
 Properties specified as nullable in the schema will have an java 8 `java.util.optional` type.
