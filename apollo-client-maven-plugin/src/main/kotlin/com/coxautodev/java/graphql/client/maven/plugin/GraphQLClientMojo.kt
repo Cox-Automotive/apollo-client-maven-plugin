@@ -42,11 +42,19 @@ class GraphQLClientMojo: AbstractMojo() {
     @Parameter(property = "addSourceRoot", defaultValue = "true")
     private var addSourceRoot: Boolean? = null
 
+    @Parameter(property = "skip", defaultValue = "false")
+    private var skip: Boolean? = null
+
     @Parameter(readonly = true, required = true, defaultValue = "\${project}")
     private var project: MavenProject? = null
 
     @Throws(MojoExecutionException::class)
     override fun execute() {
+        if(skip == true) {
+            log.info("Skipping because skip is true")
+            return
+        }
+
         val project = this.project!!
         val outputDirectory = this.outputDirectory!!
         val basePackage = this.basePackage!!

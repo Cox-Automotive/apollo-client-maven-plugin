@@ -50,6 +50,7 @@ All plugin options and their defaults:
     <basePackage>com.example.graphql.client</basePackage>
     <schemaFile>${project.basedir}/src/main/graphql/schema.json</schemaFile>
     <addSourceRoot>true</addSourceRoot>
+    <skip>false</skip>
 </configuration>
 ```
 
