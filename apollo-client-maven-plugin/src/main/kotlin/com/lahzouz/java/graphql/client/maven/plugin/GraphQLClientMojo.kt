@@ -23,79 +23,67 @@ import java.util.stream.Collectors
  * Generates classes for a graphql API
  */
 @Mojo(name = "generate",
-    requiresDependencyCollection = ResolutionScope.COMPILE,
-    requiresDependencyResolution = ResolutionScope.COMPILE,
-    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-    threadSafe = true
+        requiresDependencyCollection = ResolutionScope.COMPILE,
+        requiresDependencyResolution = ResolutionScope.COMPILE,
+        defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+        threadSafe = true
 )
-class GraphQLClientMojo: AbstractMojo() {
+class GraphQLClientMojo : AbstractMojo() {
+
+    @Parameter(defaultValue = "\${project}")
+    private lateinit var project: MavenProject
 
     @Parameter(property = "outputDirectory", defaultValue = "\${project.build.directory}/generated-sources/graphql-client")
-    private var outputDirectory: File? = null
+    lateinit var outputDirectory: File
+
+    @Parameter(readonly = true, property = "introspectionFile", defaultValue = "\${project.basedir}/src/main/graphql/schema.json")
+    lateinit var introspectionFile: File
 
     @Parameter(property = "basePackage", defaultValue = "com.example.graphql.client")
-    private var basePackage: String? = null
+    private lateinit var basePackage: String
 
     @Parameter(property = "outputPackage", defaultValue = "com.example.graphql.client")
-    private var outputPackage: String? = null
-
-    @Parameter(property = "introspectionFile", defaultValue = "\${project.basedir}/src/main/graphql/schema.json")
-    private var introspectionFile: File? = null
-
-    @Parameter(property = "addSourceRoot", defaultValue = "true")
-    private var addSourceRoot: Boolean? = null
-
-    @Parameter(readonly = true, required = true, defaultValue = "\${project}")
-    private var project: MavenProject? = null
+    private lateinit var outputPackage: String
 
     @Parameter(property = "customTypeMap")
-    private var customTypeMap: Map<String, String> = mapOf()
+    private var customTypeMap: Map<String, String> = emptyMap()
 
-    @Parameter(property = "nullableValueType")
-        private var nullableValueType: NullableValueType = NullableValueType.JAVA_OPTIONAL
+    @Parameter(property = "nullableValueType", defaultValue = "JAVA_OPTIONAL")
+    private var nullableValueType: NullableValueType = NullableValueType.JAVA_OPTIONAL
 
-    @Parameter(property = "useSemanticNaming")
+    @Parameter(property = "addSourceRoot", defaultValue = "true")
+    private var addSourceRoot: Boolean = true
+
+    @Parameter(property = "useSemanticNaming", defaultValue = "true")
     private var useSemanticNaming: Boolean = true
 
-    @Parameter(property = "generateModelBuilder")
+    @Parameter(property = "generateModelBuilder", defaultValue = "true")
     private var generateModelBuilder: Boolean = true
 
-    @Parameter(property = "suppressRawTypesWarning")
+    @Parameter(property = "suppressRawTypesWarning", defaultValue = "false")
     private var suppressRawTypesWarning: Boolean = false
 
-    @Parameter(property = "useJavaBeansSemanticNaming")
+    @Parameter(property = "useJavaBeansSemanticNaming", defaultValue = "false")
     private var useJavaBeansSemanticNaming: Boolean = false
 
 
     @Throws(MojoExecutionException::class)
     override fun execute() {
-        val project = this.project!!
-        val outputDirectory = this.outputDirectory!!
-        val basePackage = this.basePackage!!
-        val outputPackage = this.basePackage!!
-        val nullableValueType = this.nullableValueType
-        val useSemanticNaming = this.useSemanticNaming
-        val generateModelBuilder = this.generateModelBuilder
-        val suppressRawTypesWarning = this.suppressRawTypesWarning
-        val useJavaBeansSemanticNaming = this.useJavaBeansSemanticNaming
-        val introspectionFile = this.introspectionFile!!
-        val customTypeMap = this.customTypeMap
-
+        log.info("Apollo GraphQL Client Code Generation task started")
         val basePackageDirName = basePackage.replace('.', File.separatorChar)
         val sourceDirName = joinPath("src", "main", "graphql")
         val queryDir = File(project.basedir, sourceDirName)
-
-        if(!queryDir.isDirectory) {
-            throw IllegalArgumentException("'${queryDir.absolutePath}' must be a directory")
+        if (!queryDir.isDirectory) {
+            throw MojoExecutionException("'${queryDir.absolutePath}' must be a directory")
         }
 
+        log.info("Read queries started")
         val queries = Files.walk(queryDir.toPath())
-            .filter { it.toFile().isFile && it.toFile().name.endsWith(".graphql") }
-            .map { it.toFile().relativeTo(queryDir) }
-            .collect(Collectors.toList())
-
-        if(queries.isEmpty()) {
-            throw IllegalArgumentException("No queries found under '${queryDir.absolutePath}")
+                .filter { it.toFile().isFile && it.toFile().name.endsWith(".graphql") }
+                .map { it.toFile().relativeTo(queryDir) }
+                .collect(Collectors.toList())
+        if (queries.isEmpty()) {
+            throw MojoExecutionException("No queries found under '${queryDir.absolutePath}")
         }
 
         val baseTargetDir = File(project.build.directory, joinPath("graphql-schema", sourceDirName, basePackageDirName))
@@ -106,8 +94,8 @@ class GraphQLClientMojo: AbstractMojo() {
         nodeModules.mkdirs()
 
         val nodeModuleResources = Reflections(ConfigurationBuilder().setScanners(ResourcesScanner())
-            .setUrls(javaClass.getResource("/node_modules")))
-            .getResources(Pattern.compile(".*"))
+                .setUrls(javaClass.getResource("/node_modules")))
+                .getResources(Pattern.compile(".*"))
 
         nodeModuleResources.map { "/$it" }.forEach { resource ->
             val path = resource.replaceFirst("/node_modules/", "").replace("/", File.separator)
@@ -119,12 +107,12 @@ class GraphQLClientMojo: AbstractMojo() {
         val apolloCli = File(nodeModules, joinPath("apollo-codegen", "lib", "cli.js"))
         apolloCli.setExecutable(true)
 
-        if(!introspectionFile.isFile) {
-            throw IllegalArgumentException("Introspection JSON not found: ${introspectionFile.absolutePath}")
+        if (!introspectionFile.isFile) {
+            throw MojoExecutionException("Introspection JSON not found: ${introspectionFile.absolutePath}")
         }
 
-        if(!apolloCli.isFile) {
-            throw IllegalStateException("Apollo codegen cli not found: '${apolloCli.absolutePath}'")
+        if (!apolloCli.isFile) {
+            throw MojoExecutionException("Apollo codegen cli not found: '${apolloCli.absolutePath}'")
         }
 
         schema.parentFile.mkdirs()
@@ -140,12 +128,12 @@ class GraphQLClientMojo: AbstractMojo() {
         log.info("Running apollo cli (${apolloCli.absolutePath}) with arguments: ${arguments.joinToString(" ")}")
 
         val proc = ProcessBuilder("node", apolloCli.absolutePath, *arguments.toTypedArray())
-            .directory(nodeModules.parentFile)
-            .inheritIO()
-            .start()
+                .directory(nodeModules.parentFile)
+                .inheritIO()
+                .start()
 
-        if(proc.waitFor() != 0) {
-            throw IllegalStateException("Apollo codegen cli command failed")
+        if (proc.waitFor() != 0) {
+            throw MojoExecutionException("Apollo codegen cli command failed")
         }
 
         val compiler = GraphQLCompiler()
@@ -156,11 +144,14 @@ class GraphQLClientMojo: AbstractMojo() {
                 useJavaBeansSemanticNaming = useJavaBeansSemanticNaming,
                 outputPackageName = outputPackage))
 
-        if(addSourceRoot == true) {
+        if (addSourceRoot) {
             project.addCompileSourceRoot(outputDirectory.absolutePath)
         }
+        log.info("Apollo GraphQL Client Code Generation task finished")
     }
 
     private fun joinPath(vararg names: String): String = names.joinToString(File.separator)
 }
+
+
 
