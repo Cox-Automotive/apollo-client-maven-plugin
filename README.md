@@ -1,10 +1,12 @@
 # Apollo GraphQL Client Code Generation Maven Plugin
-[![CircleCI](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin.svg?style=svg)](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin) 
-[![Download](https://api.bintray.com/packages/sparow199/maven/apollo-client-maven-plugin/images/download.svg) ](https://bintray.com/sparow199/maven/apollo-client-maven-plugin/_latestVersion)
+
+[![CircleCI](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin.svg?style=svg)](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin)
+[![Download](https://api.bintray.com/packages/sparow199/maven/apollo-client-maven-plugin/images/download.svg)](https://bintray.com/sparow199/maven/apollo-client-maven-plugin/_latestVersion)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/71b115f870bb44478dac5d05abc9f378)](https://app.codacy.com/app/Sparow199/apollo-client-maven-plugin?utm_source=github.com&utm_medium=referral&utm_content=Sparow199/apollo-client-maven-plugin&utm_campaign=Badge_Grade_Dashboard)
 [![Known Vulnerabilities](https://snyk.io/test/github/sparow199/apollo-client-maven-plugin/badge.svg)](https://snyk.io/test/github/Sparow199/apollo-client-maven-plugin)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSparow199%2Fapollo-client-maven-plugin.svg?type=shield)]
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSparow199%2Fapollo-client-maven-plugin.svg?type=shield)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Usage
 
 A full usage example can be found in the [test project](https://github.com/sparow199/apollo-client-maven-plugin/tree/master/apollo-client-maven-plugin-tests)
@@ -14,6 +16,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
 **NOTE: This plugin requires a nodejs environment to execute the bundled apollo-codegen node module.**
 
 1. Add the apollo runtime library and guava to your project's depedencies:
+
     ```xml
     <dependency>
         <groupId>com.apollographql.apollo</groupId>
@@ -21,7 +24,9 @@ A full usage example can be found in the [test project](https://github.com/sparo
         <version>1.0.0-alpha5</version>
     </dependency>
     ```
+
 2. Add the code generator plugin to your project's build (if codegen is desired):
+
     ```xml
     <plugin>
         <groupId>com.github.sparow199</groupId>
@@ -39,6 +44,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
         </executions>
     </plugin>
     ```
+
 3. Create a file `src/main/graphql/schema.json` with the JSON results of an [introspection query](https://gist.github.com/Sparow199/a59527016e16a2d56309d62e01ff2348)
 4. Create files for each query you'd like to generate classes for under `src/main/graphql`:
     1. Query file names must match the name of the query they contain
@@ -49,6 +55,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
 ### Configuration Options
 
 All plugin options and their defaults:
+
 ```xml
 <configuration>
     <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
@@ -65,7 +72,8 @@ All plugin options and their defaults:
 </configuration>
 ```
 
-#### Nullable Types 
+#### Nullable Types
+
 Available nullable types:
 
 ```java
@@ -76,9 +84,11 @@ Available nullable types:
     INPUT_TYPE
 ```
 
-#### Custom Types 
+#### Custom Types
+
 To use the [Custom Scalar Types](https://github.com/apollographql/apollo-android#custom-scalar-types) you need to 
 define mapping configuration then register your custom adapter:  
+
 ```xml
 <configuration>
     ...
@@ -104,14 +114,14 @@ ApolloClient client = ApolloClient.builder()
         })
         .build())
     .build()
-    
+
 client.newCall(new GetBooks())
     .enqueue(new ApolloCall.Callback<GetBooks.Data>() {
-    
+
     @Override public void onResponse(@NotNull Response<GetBooks.Data> response) {
         ...
     }
-    
+
     @Override public void onFailure(@NotNull ApolloException t) {
         ...
     }
@@ -120,11 +130,11 @@ client.newCall(new GetBooks())
 
 Properties specified as nullable in the schema will have an java 8 `java.util.optional` type.
 
-# Contributors
+## Contributors
 
 * Andrew Potter => apottere
 * William Yu => wiyu
 * Moncef AOUDIA => sparow199
 * Ryan Gardner => ryangardner
 * Unknown => ddekkers
-* Unknown => mgrossmanexp
+* Unknown => mgrossmanexp# Apollo GraphQL Client Code Generation Maven Plugin

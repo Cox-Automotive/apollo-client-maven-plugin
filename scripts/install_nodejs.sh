@@ -9,8 +9,8 @@ source $NVM_DIR/nvm.sh
 nvm install 8.9 && nvm alias default 8.9
 echo 8.9 > $HOME/.nvmrc
 # Enable nvm in following steps
-echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
-echo 'source $NVM_DIR/nvm.sh' >> $BASH_ENV
+echo "export NVM_DIR=$HOME/.nvm" >> $BASH_ENV
+echo "source $NVM_DIR/nvm.sh" >> $BASH_ENV
 # To fix npm install : "node-pre-gyp: Permission denied"
 npm config set user 0
 npm config set unsafe-perm true
