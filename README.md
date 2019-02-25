@@ -15,7 +15,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
 
 **NOTE: This plugin requires a nodejs environment to execute the bundled apollo-codegen node module.**
 
-1.  Add the apollo runtime library and guava to your project's depedencies:
+1. Add the apollo runtime library and guava to your project's depedencies:
 
     ```xml
     <dependency>
@@ -25,7 +25,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     </dependency>
     ```
 
-2.  Add the code generator plugin to your project's build (if codegen is desired):
+2. Add the code generator plugin to your project's build (if codegen is desired):
 
     ```xml
     <plugin>
@@ -45,12 +45,12 @@ A full usage example can be found in the [test project](https://github.com/sparo
     </plugin>
     ```
 
-3.  Create a file `src/main/graphql/schema.json` with the JSON results of an [introspection query](https://gist.github.com/Sparow199/a59527016e16a2d56309d62e01ff2348)
-4.  Create files for each query you'd like to generate classes for under `src/main/graphql`:
-    1.  Query file names must match the name of the query they contain
-    2.  Query files must end with `.graphql`
-    3.  Any subdirectories under `src/main/graphql` are treated as extra package names to append to `packageName` in the plugin config.
-5.  Run `mvn clean generate-sources` to generate classes for your queries.
+3. Create a file `src/main/graphql/schema.json` with the JSON results of an [introspection query](https://gist.github.com/Sparow199/a59527016e16a2d56309d62e01ff2348)
+4. Create files for each query you'd like to generate classes for under `src/main/graphql`:
+       1.  Query file names must match the name of the query they contain
+       2.  Query files must end with `.graphql`
+       3.  Any subdirectories under `src/main/graphql` are treated as extra package names to append to `packageName` in the plugin config.
+5. Run `mvn clean generate-sources` to generate classes for your queries.
 
 ### Configuration Options
 
@@ -69,6 +69,7 @@ All plugin options and their defaults:
     <nullableValueType>JAVA_OPTIONAL</nullableValueType>
     <suppressRawTypesWarning>false</suppressRawTypesWarning>
     <customTypeMap></customTypeMap>
+    <skip>false</skip>
 </configuration>
 ```
 
@@ -132,9 +133,10 @@ Properties specified as nullable in the schema will have an java 8 `java.util.op
 
 ## Contributors
 
--   Andrew Potter => apottere
--   William Yu => wiyu
--   Moncef AOUDIA => sparow199
--   Ryan Gardner => ryangardner
--   Unknown => ddekkers
--   Unknown => mgrossmanexp
+- Andrew Potter => apottere
+- William Yu => wiyu
+- Moncef AOUDIA => sparow199
+- Ryan Gardner => ryangardner
+- Abdullah Diab => mpcabd
+- Unknown => ddekkers
+- Unknown => mgrossmanexp

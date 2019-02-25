@@ -51,6 +51,9 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "nullableValueType", defaultValue = "JAVA_OPTIONAL")
     private var nullableValueType: NullableValueType = NullableValueType.JAVA_OPTIONAL
 
+    @Parameter(property = "skip", defaultValue = "false")
+    private var skip: Boolean = false
+
     @Parameter(property = "addSourceRoot", defaultValue = "true")
     private var addSourceRoot: Boolean = true
 
@@ -69,6 +72,12 @@ class GraphQLClientMojo : AbstractMojo() {
 
     @Throws(MojoExecutionException::class)
     override fun execute() {
+        
+        if(skip == true) {
+            log.info("Skipping because skip is true")
+            return
+        }
+
         log.info("Apollo GraphQL Client Code Generation task started")
         val basePackageDirName = basePackage.replace('.', File.separatorChar)
         val sourceDirName = joinPath("src", "main", "graphql")
@@ -137,9 +146,13 @@ class GraphQLClientMojo : AbstractMojo() {
         }
 
         val compiler = GraphQLCompiler()
-        compiler.write(GraphQLCompiler.Arguments(irFile = schema, outputDir = outputDirectory,
-                customTypeMap = customTypeMap, nullableValueType = nullableValueType,
-                useSemanticNaming = useSemanticNaming, generateModelBuilder = generateModelBuilder,
+        compiler.write(GraphQLCompiler.Arguments(
+                irFile = schema,
+                outputDir = outputDirectory,
+                customTypeMap = customTypeMap,
+                nullableValueType = nullableValueType,
+                useSemanticNaming = useSemanticNaming,
+                generateModelBuilder = generateModelBuilder,
                 suppressRawTypesWarning = suppressRawTypesWarning,
                 useJavaBeansSemanticNaming = useJavaBeansSemanticNaming,
                 outputPackageName = outputPackage))

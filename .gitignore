@@ -7,7 +7,6 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff
-.idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
@@ -80,7 +79,6 @@ fabric.properties
 
 *.iml
 modules.xml
-.idea/misc.xml
 *.ipr
 
 ### Java ###
@@ -161,7 +159,6 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
 
 ### Node ###
 # Logs
@@ -198,7 +195,6 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -270,3 +266,16 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/node,java,linux,macos,maven,windows,intellij+all
+/apollo-client-maven-plugin/.settings/
+
+apollo-client-maven-plugin/\.project
+/.settings/
+\.project
+
+apollo-client-maven-plugin-tests/\.settings/org\.eclipse\.core\.resources\.prefs
+
+apollo-client-maven-plugin-tests/\.settings/org\.eclipse\.m2e\.core\.prefs
+
+apollo-client-maven-plugin/\.classpath
+
+apollo-client-maven-plugin/\.factorypath
