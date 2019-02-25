@@ -73,8 +73,8 @@ class GraphQLClientMojo : AbstractMojo() {
     @Throws(MojoExecutionException::class)
     override fun execute() {
         
-        if(skip == true) {
-            log.info("Skipping because skip is true")
+        if(skip) {
+            log.info("Skipping execution because skip option is true")
             return
         }
 
