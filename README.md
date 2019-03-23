@@ -58,18 +58,18 @@ All plugin options and their defaults:
 
 ```xml
 <configuration>
-    <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
-    <basePackage>com.example.graphql.client</basePackage>
-    <outputPackage>com.example.graphql.client</basePackage>
-    <schemaFile>${project.basedir}/src/main/graphql/schema.json</schemaFile>
+    <skip>false</skip>
     <addSourceRoot>true</addSourceRoot>
+    <basePackage>com.example.graphql.client</basePackage>
+    <introspectionFile>${project.basedir}/src/main/graphql/schema.json</introspectionFile>
+    <outputPackage>com.example.graphql.client</basePackage>
+    <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
     <generateModelBuilder>true</generateModelBuilder>
     <useJavaBeansSemanticNaming>true</useJavaBeansSemanticNaming>
     <useSemanticNaming>true</useSemanticNaming>
     <nullableValueType>JAVA_OPTIONAL</nullableValueType>
     <suppressRawTypesWarning>false</suppressRawTypesWarning>
     <customTypeMap></customTypeMap>
-    <skip>false</skip>
 </configuration>
 ```
 

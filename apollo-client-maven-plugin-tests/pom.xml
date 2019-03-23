@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -81,9 +82,13 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <basePackage>com.lahzouz.java.graphql.client.tests</basePackage>
-                            <outputPackage>com.lahzouz.java.graphql.client.tests</outputPackage>
+                            <skip>false</skip>
                             <addSourceRoot>true</addSourceRoot>
+                            <basePackage>com.lahzouz.java.graphql.client.tests</basePackage>
+                            <introspectionFile>${project.basedir}/src/main/graphql/schema.json</introspectionFile>
+                            <outputPackage>com.lahzouz.java.graphql.client.tests</outputPackage>
+                            <outputDirectory>${project.build.directory}/generated-sources/graphql-client
+                            </outputDirectory>
                             <generateModelBuilder>true</generateModelBuilder>
                             <useJavaBeansSemanticNaming>true</useJavaBeansSemanticNaming>
                             <useSemanticNaming>true</useSemanticNaming>
@@ -92,7 +97,6 @@
                             <customTypeMap>
                                 <Long>java.lang.Long</Long>
                             </customTypeMap>
-                            <skip>false</skip>
                         </configuration>
                     </execution>
                 </executions>

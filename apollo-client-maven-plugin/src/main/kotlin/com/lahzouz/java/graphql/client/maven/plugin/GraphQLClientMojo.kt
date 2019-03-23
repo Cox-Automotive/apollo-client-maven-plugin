@@ -66,14 +66,14 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "suppressRawTypesWarning", defaultValue = "false")
     private var suppressRawTypesWarning: Boolean = false
 
-    @Parameter(property = "useJavaBeansSemanticNaming", defaultValue = "false")
-    private var useJavaBeansSemanticNaming: Boolean = false
+    @Parameter(property = "useJavaBeansSemanticNaming", defaultValue = "true")
+    private var useJavaBeansSemanticNaming: Boolean = true
 
 
     @Throws(MojoExecutionException::class)
     override fun execute() {
-        
-        if(skip) {
+
+        if (skip) {
             log.info("Skipping execution because skip option is true")
             return
         }
