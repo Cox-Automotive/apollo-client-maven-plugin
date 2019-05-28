@@ -69,6 +69,9 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "useJavaBeansSemanticNaming", defaultValue = "true")
     private var useJavaBeansSemanticNaming: Boolean = true
 
+    @Parameter(property = "generateKotlinModels", defaultValue = "false")
+    private var generateKotlinModels: Boolean = true
+
 
     @Throws(MojoExecutionException::class)
     override fun execute() {
@@ -153,6 +156,7 @@ class GraphQLClientMojo : AbstractMojo() {
                 nullableValueType = nullableValueType,
                 useSemanticNaming = useSemanticNaming,
                 generateModelBuilder = generateModelBuilder,
+                generateKotlinModels = generateKotlinModels,
                 suppressRawTypesWarning = suppressRawTypesWarning,
                 useJavaBeansSemanticNaming = useJavaBeansSemanticNaming,
                 outputPackageName = outputPackage))
