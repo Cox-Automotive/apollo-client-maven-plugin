@@ -21,7 +21,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <dependency>
         <groupId>com.apollographql.apollo</groupId>
         <artifactId>apollo-runtime</artifactId>
-        <version>1.0.0-alpha5</version>
+        <version>1.0.0</version>
     </dependency>
     ```
 
