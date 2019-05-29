@@ -70,6 +70,7 @@ All plugin options and their defaults:
     <nullableValueType>JAVA_OPTIONAL</nullableValueType>
     <suppressRawTypesWarning>false</suppressRawTypesWarning>
     <customTypeMap></customTypeMap>
+    <generateKotlinModels>false</generateKotlinModels>
 </configuration>
 ```
 
