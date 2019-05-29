@@ -70,7 +70,7 @@ workflows:
             - build
           filters:
             tags:
-              only: /v.*/
+              only: /^v\d+\.\d+\.\d+$/
             branches:
-              only:
-                - master
+              ignore:
+                - /^(?!master).*$/
