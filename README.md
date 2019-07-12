@@ -31,7 +31,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <plugin>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>1.3.0</version>
+        <version>1.3.1</version>
         <executions>
             <execution>
                 <goals>
@@ -45,7 +45,9 @@ A full usage example can be found in the [test project](https://github.com/sparo
     </plugin>
     ```
 
-3. Create a file `src/main/graphql/schema.json` with the JSON results of an [introspection query](https://gist.github.com/Sparow199/a59527016e16a2d56309d62e01ff2348)
+3. Create a file `src/main/graphql/schema.json` with the JSON results of an [introspection query](https://gist.github.com/Sparow199/a59527016e16a2d56309d62e01ff2348) OR you can
+automatically generate this file by setting `generateIntrospectionFile` to true and `schemaUrl` to your GraphQL endpoint. At build time, the plugin will query the server and install this file
+per the value of `introspectionFile`.
 4. Create files for each query you'd like to generate classes for under `src/main/graphql`:
        1.  Query file names must match the name of the query they contain
        2.  Query files must end with `.graphql`
@@ -62,6 +64,8 @@ All plugin options and their defaults:
     <addSourceRoot>true</addSourceRoot>
     <basePackage>com.example.graphql.client</basePackage>
     <introspectionFile>${project.basedir}/src/main/graphql/schema.json</introspectionFile>
+    <generateIntrospectionFile>false</generateIntrospectionFile>
+    <schemaUrl>http://localhost</schemaUrl>
     <outputPackage>com.example.graphql.client</basePackage>
     <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
     <generateModelBuilder>true</generateModelBuilder>

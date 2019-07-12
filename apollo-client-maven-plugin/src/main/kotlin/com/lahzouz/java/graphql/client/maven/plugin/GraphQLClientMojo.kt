@@ -51,6 +51,12 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "nullableValueType", defaultValue = "JAVA_OPTIONAL")
     private var nullableValueType: NullableValueType = NullableValueType.JAVA_OPTIONAL
 
+    @Parameter(property = "generateIntrospectionFile", defaultValue = "false")
+    private var generateIntrospectionFile: Boolean = false
+
+    @Parameter(property = "schemaUrl", defaultValue = "http://localhost")
+    private lateinit var schemaUrl: String
+
     @Parameter(property = "skip", defaultValue = "false")
     private var skip: Boolean = false
 
@@ -81,6 +87,44 @@ class GraphQLClientMojo : AbstractMojo() {
             return
         }
 
+        val nodeModules = File(project.build.directory, joinPath("apollo-codegen-node-modules", "node_modules"))
+        nodeModules.deleteRecursively()
+        nodeModules.mkdirs()
+
+        val nodeModuleResources = Reflections(ConfigurationBuilder().setScanners(ResourcesScanner())
+                .setUrls(javaClass.getResource("/node_modules")))
+                .getResources(Pattern.compile(".*"))
+
+        nodeModuleResources.map { "/$it" }.forEach { resource ->
+            val path = resource.replaceFirst("/node_modules/", "").replace("/", File.separator)
+            val diskPath = File(nodeModules, path)
+            diskPath.parentFile.mkdirs()
+            FileUtils.copyURLToFile(javaClass.getResource(resource), diskPath)
+        }
+
+        val apolloCli = File(nodeModules, joinPath("apollo-codegen", "lib", "cli.js"))
+        apolloCli.setExecutable(true)
+
+        if (!apolloCli.isFile) {
+            throw MojoExecutionException("Apollo codegen cli not found: '${apolloCli.absolutePath}'")
+        }
+
+        if (generateIntrospectionFile) {
+            log.info("Automatically generating introspection file")
+            val arguments = listOf("introspect-schema", schemaUrl, "--output", introspectionFile.absolutePath)
+            log.info("Running apollo cli (${apolloCli.absolutePath}) with arguments: ${arguments.joinToString(" ")}")
+
+            val proc = ProcessBuilder("node", apolloCli.absolutePath, *arguments.toTypedArray())
+                    .directory(nodeModules.parentFile)
+                    .inheritIO()
+                    .start()
+
+            if (proc.waitFor() != 0) {
+                throw MojoExecutionException("Apollo codegen cli command failed")
+            }
+
+        }
+
         log.info("Apollo GraphQL Client Code Generation task started")
         val basePackageDirName = basePackage.replace('.', File.separatorChar)
         val sourceDirName = joinPath("src", "main", "graphql")
@@ -101,30 +145,10 @@ class GraphQLClientMojo : AbstractMojo() {
         val baseTargetDir = File(project.build.directory, joinPath("graphql-schema", sourceDirName, basePackageDirName))
         val schema = File(baseTargetDir, "schema.json")
 
-        val nodeModules = File(project.build.directory, joinPath("apollo-codegen-node-modules", "node_modules"))
-        nodeModules.deleteRecursively()
-        nodeModules.mkdirs()
 
-        val nodeModuleResources = Reflections(ConfigurationBuilder().setScanners(ResourcesScanner())
-                .setUrls(javaClass.getResource("/node_modules")))
-                .getResources(Pattern.compile(".*"))
-
-        nodeModuleResources.map { "/$it" }.forEach { resource ->
-            val path = resource.replaceFirst("/node_modules/", "").replace("/", File.separator)
-            val diskPath = File(nodeModules, path)
-            diskPath.parentFile.mkdirs()
-            FileUtils.copyURLToFile(javaClass.getResource(resource), diskPath)
-        }
-
-        val apolloCli = File(nodeModules, joinPath("apollo-codegen", "lib", "cli.js"))
-        apolloCli.setExecutable(true)
 
         if (!introspectionFile.isFile) {
             throw MojoExecutionException("Introspection JSON not found: ${introspectionFile.absolutePath}")
-        }
-
-        if (!apolloCli.isFile) {
-            throw MojoExecutionException("Apollo codegen cli not found: '${apolloCli.absolutePath}'")
         }
 
         schema.parentFile.mkdirs()
