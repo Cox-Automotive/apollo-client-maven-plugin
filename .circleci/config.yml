@@ -72,5 +72,4 @@ workflows:
             tags:
               only: /^v\d+\.\d+\.\d+$/
             branches:
-              ignore:
-                - /.*/
+              only: master
