@@ -75,6 +75,7 @@ All plugin options and their defaults:
     <suppressRawTypesWarning>false</suppressRawTypesWarning>
     <customTypeMap></customTypeMap>
     <generateKotlinModels>false</generateKotlinModels>
+    <nodeExecutable>node</nodeExecutable>
 </configuration>
 ```
 
