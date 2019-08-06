@@ -78,6 +78,8 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "generateKotlinModels", defaultValue = "false")
     private var generateKotlinModels: Boolean = true
 
+    @Parameter(property = "nodeExecutable", defaultValue = "node")
+    private lateinit var nodeExecutable: String
 
     @Throws(MojoExecutionException::class)
     override fun execute() {
@@ -114,7 +116,7 @@ class GraphQLClientMojo : AbstractMojo() {
             val arguments = listOf("introspect-schema", schemaUrl, "--output", introspectionFile.absolutePath)
             log.info("Running apollo cli (${apolloCli.absolutePath}) with arguments: ${arguments.joinToString(" ")}")
 
-            val proc = ProcessBuilder("node", apolloCli.absolutePath, *arguments.toTypedArray())
+            val proc = ProcessBuilder(nodeExecutable, apolloCli.absolutePath, *arguments.toTypedArray())
                     .directory(nodeModules.parentFile)
                     .inheritIO()
                     .start()
@@ -163,7 +165,7 @@ class GraphQLClientMojo : AbstractMojo() {
         val arguments = listOf("generate", *queries.map { File(baseTargetDir, it.path).absolutePath }.toTypedArray(), "--target", "json", "--schema", introspectionFile.absolutePath, "--output", schema.absolutePath)
         log.info("Running apollo cli (${apolloCli.absolutePath}) with arguments: ${arguments.joinToString(" ")}")
 
-        val proc = ProcessBuilder("node", apolloCli.absolutePath, *arguments.toTypedArray())
+        val proc = ProcessBuilder(nodeExecutable, apolloCli.absolutePath, *arguments.toTypedArray())
                 .directory(nodeModules.parentFile)
                 .inheritIO()
                 .start()
