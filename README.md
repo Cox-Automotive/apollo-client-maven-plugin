@@ -21,7 +21,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <dependency>
         <groupId>com.apollographql.apollo</groupId>
         <artifactId>apollo-runtime</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.2</version>
     </dependency>
     ```
 
@@ -31,7 +31,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <plugin>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>1.3.2</version>
+        <version>1.3.3</version>
         <executions>
             <execution>
                 <goals>
