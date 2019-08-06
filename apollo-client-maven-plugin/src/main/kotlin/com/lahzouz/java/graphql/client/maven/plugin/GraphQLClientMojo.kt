@@ -20,7 +20,7 @@ import java.util.stream.Collectors
 
 
 /**
- * Generates classes for a graphql API
+ * Generate classes for a graphql API
  */
 @Mojo(name = "generate",
         requiresDependencyCollection = ResolutionScope.COMPILE,
@@ -144,10 +144,9 @@ class GraphQLClientMojo : AbstractMojo() {
             throw MojoExecutionException("No queries found under '${queryDir.absolutePath}")
         }
 
-        val baseTargetDir = File(project.build.directory, joinPath("graphql-schema", sourceDirName, basePackageDirName))
+        val baseTargetDir = File(project.build.directory, joinPath("graphql-schema", sourceDirName,
+                basePackageDirName))
         val schema = File(baseTargetDir, "schema.json")
-
-
 
         if (!introspectionFile.isFile) {
             throw MojoExecutionException("Introspection JSON not found: ${introspectionFile.absolutePath}")
@@ -162,7 +161,10 @@ class GraphQLClientMojo : AbstractMojo() {
             src.copyTo(dest, overwrite = true)
         }
 
-        val arguments = listOf("generate", *queries.map { File(baseTargetDir, it.path).absolutePath }.toTypedArray(), "--target", "json", "--schema", introspectionFile.absolutePath, "--output", schema.absolutePath)
+        val arguments = listOf("generate", *queries.map { File(baseTargetDir, it.path).absolutePath }
+                .toTypedArray(), "--target", "json", "--schema", introspectionFile.absolutePath,
+                "--output", schema.absolutePath)
+
         log.info("Running apollo cli (${apolloCli.absolutePath}) with arguments: ${arguments.joinToString(" ")}")
 
         val proc = ProcessBuilder(nodeExecutable, apolloCli.absolutePath, *arguments.toTypedArray())

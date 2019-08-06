@@ -31,7 +31,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <plugin>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>1.3.1</version>
+        <version>1.3.2</version>
         <executions>
             <execution>
                 <goals>
