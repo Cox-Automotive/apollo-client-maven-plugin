@@ -1,7 +1,6 @@
 package com.lahzouz.java.graphql.client.tests
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.response.CustomTypeAdapter
 import com.apollographql.apollo.response.CustomTypeValue
 import com.coxautodev.graphql.tools.SchemaParser
@@ -22,8 +21,6 @@ import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import java.io.File
 import java.math.BigDecimal
 import java.net.InetSocketAddress
-import java.util.*
-import java.util.concurrent.CompletableFuture
 import javax.servlet.Servlet
 
 
@@ -105,18 +102,14 @@ class IntegrationSpec {
     @Test
     @DisplayName("generated book query returns data")
     fun bookQueryTest() {
-        val future: CompletableFuture<Response<Optional<GetBooksQuery.Data>>> = CompletableFuture()
-        client.query(GetBooksQuery()).enqueue(TestCallback(future))
-        val response = future.join()
+        val response = client.query(GetBooksQuery()).toCompletableFuture().join()
         assertThat(response.data()?.get()?.books).isNotEmpty.hasSize(4)
     }
 
     @Test
     @DisplayName("generated author query returns data")
     fun authorQueryTest() {
-        val future: CompletableFuture<Response<Optional<GetAuthorsQuery.Data>>> = CompletableFuture()
-        client.query(GetAuthorsQuery()).enqueue(TestCallback(future))
-        val response = future.join()
+        val response = client.query(GetAuthorsQuery()).toCompletableFuture().join()
         assertThat(response.data()?.get()?.authors).isNotEmpty.hasSize(2)
     }
 
