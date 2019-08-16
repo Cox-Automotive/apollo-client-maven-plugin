@@ -11,35 +11,40 @@
 
     <artifactId>apollo-client-maven-plugin-tests</artifactId>
     <packaging>jar</packaging>
-
     <name>apollo-client-maven-plugin-tests</name>
     <description>Test for maven plugin</description>
     <url>https://github.com/Sparow199/apollo-client-maven-plugin.git</url>
 
     <properties>
+        <maven.install.skip>true</maven.install.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.install.skip>true</maven.install.skip>
-        <undertow.version>2.0.17.Final</undertow.version>
+        <apollo-runtime.version>1.0.2</apollo-runtime.version>
+        <apollo-client-maven-plugin.version>1.3.3</apollo-client-maven-plugin.version>
+        <assertj-core.version>3.13.2</assertj-core.version>
+        <graphql-java-servlet.version>6.1.3</graphql-java-servlet.version>
+        <graphql-java-tools.version>5.2.4</graphql-java-tools.version>
         <junit.jupiter.version>5.5.1</junit.jupiter.version>
+        <slf4j-simple.version>1.7.28</slf4j-simple.version>
+        <undertow.version>2.0.23.Final</undertow.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.apollographql.apollo</groupId>
             <artifactId>apollo-runtime</artifactId>
-            <version>1.0.1</version>
+            <version>${apollo-runtime.version}</version>
         </dependency>
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java-tools</artifactId>
-            <version>5.2.4</version>
+            <version>${graphql-java-tools.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java-servlet</artifactId>
-            <version>6.1.3</version>
+            <version>${graphql-java-servlet.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -49,21 +54,15 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-servlet</artifactId>
             <version>${undertow.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>5.1.4.RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -72,7 +71,12 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-simple.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -80,7 +84,7 @@
             <plugin>
                 <groupId>com.github.sparow199</groupId>
                 <artifactId>apollo-client-maven-plugin</artifactId>
-                <version>1.3.3</version>
+                <version>${apollo-client-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>

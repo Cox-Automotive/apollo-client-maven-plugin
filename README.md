@@ -136,13 +136,3 @@ client.newCall(new GetBooks())
 ```
 
 Properties specified as nullable in the schema will have an java 8 `java.util.optional` type.
-
-## Contributors
-
-- Andrew Potter => apottere
-- William Yu => wiyu
-- Moncef AOUDIA => sparow199
-- Ryan Gardner => ryangardner
-- Abdullah Diab => mpcabd
-- Unknown => ddekkers
-- Unknown => mgrossmanexp

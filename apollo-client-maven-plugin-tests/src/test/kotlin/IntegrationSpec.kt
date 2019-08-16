@@ -16,6 +16,7 @@ import io.undertow.servlet.Servlets
 import io.undertow.servlet.util.ImmediateInstanceFactory
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import java.io.File
@@ -51,7 +52,8 @@ class IntegrationSpec {
                 .setClassLoader(javaClass.classLoader)
                 .setContextPath("/")
                 .setDeploymentName("test")
-                .addServlets(Servlets.servlet("GraphQLServlet", SimpleGraphQLHttpServlet::class.java, ImmediateInstanceFactory<Servlet>(servlet)).addMapping("/graphql/*"))
+                .addServlets(Servlets.servlet("GraphQLServlet", SimpleGraphQLHttpServlet::class.java,
+                        ImmediateInstanceFactory(servlet as Servlet)).addMapping("/graphql/*"))
 
         val manager = Servlets.defaultContainer().addDeployment(servletBuilder)
         manager.deploy()
@@ -71,7 +73,6 @@ class IntegrationSpec {
             override fun decode(value: CustomTypeValue<*>): Long {
                 return (value.value as BigDecimal).toLong()
             }
-
         }
 
         client = ApolloClient.builder()
@@ -81,15 +82,14 @@ class IntegrationSpec {
                 .build()
     }
 
-    //
     @AfterAll
     fun cleanupSpec() {
         server.stop()
     }
 
-
     @Test
-    fun `print introspection query results`() {
+    @DisplayName("print introspection query results")
+    fun introspectionQueryTest() {
         val mapper = ObjectMapper()
         val data = mapper.readValue(
                 OkHttpClient().newCall(Request.Builder().url("http://127.0.0.1:$port/graphql/schema.json").build())
@@ -97,26 +97,27 @@ class IntegrationSpec {
                         .body()?.byteStream(),
                 Map::class.java
         )
+        assertThat(data).isNotEmpty
 
         File("src/main/graphql/schema.json").writeText(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data["data"]))
     }
 
     @Test
-    fun `generated book query returns data`() {
+    @DisplayName("generated book query returns data")
+    fun bookQueryTest() {
         val future: CompletableFuture<Response<Optional<GetBooksQuery.Data>>> = CompletableFuture()
-        client.query(GetBooksQuery()).enqueue(TestCallbackFuture(future))
+        client.query(GetBooksQuery()).enqueue(TestCallback(future))
         val response = future.join()
-        Assertions.assertEquals(4, response.data()?.get()?.books?.size)
-        Assertions.assertTrue(response.data()?.get()?.books?.get(0)?.getId() is Long)
-        Assertions.assertTrue(response.data()?.get()?.books?.get(3)?.getId() is Long)
+        assertThat(response.data()?.get()?.books).isNotEmpty.hasSize(4)
     }
 
     @Test
-    fun `generated author query returns data`() {
+    @DisplayName("generated author query returns data")
+    fun authorQueryTest() {
         val future: CompletableFuture<Response<Optional<GetAuthorsQuery.Data>>> = CompletableFuture()
-        client.query(GetAuthorsQuery()).enqueue(TestCallbackFuture(future))
+        client.query(GetAuthorsQuery()).enqueue(TestCallback(future))
         val response = future.join()
-        Assertions.assertEquals(2, response.data()?.get()?.authors?.size)
+        assertThat(response.data()?.get()?.authors).isNotEmpty.hasSize(2)
     }
 
     private fun createServlet(schema: GraphQLSchema): SimpleGraphQLHttpServlet {
@@ -124,5 +125,4 @@ class IntegrationSpec {
         val invocationInputFactory = GraphQLInvocationInputFactory.newBuilder(schemaProvider).build()
         return SimpleGraphQLHttpServlet.newBuilder(invocationInputFactory).build()
     }
-
 }

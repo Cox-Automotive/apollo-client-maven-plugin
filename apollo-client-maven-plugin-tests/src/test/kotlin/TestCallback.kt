@@ -8,7 +8,7 @@ import java.util.concurrent.CompletableFuture
 /**
  * @author Sparow199
  */
-class TestCallbackFuture<T>(private val future: CompletableFuture<Response<T>>) : ApolloCall.Callback<T>() {
+class TestCallback<T>(private val future: CompletableFuture<Response<T>>) : ApolloCall.Callback<T>() {
 
     override fun onFailure(ex: ApolloException) {
         future.completeExceptionally(ex)
