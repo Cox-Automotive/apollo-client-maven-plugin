@@ -1,4 +1,10 @@
 version: 2
+general:
+  branches:
+    only:
+      - master
+      - develop
+      - /feature/.*/
 jobs:
   build:
     docker:
@@ -59,17 +65,14 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - master
-                - develop
+      - build
       - deploy:
           requires:
             - build
           filters:
+            # ignore any commit on any branch by default
+            branches:
+              ignore: /.*/
+            # only act on version tags
             tags:
               only: /^v\d+\.\d+\.\d+$/
-            branches:
-              only: master
