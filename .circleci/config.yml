@@ -14,11 +14,6 @@ jobs:
       MAVEN_OPTS: -Xmx3200m
     steps:
       - checkout
-      - run:
-          name: install node via NVM
-          command: |
-            chmod +x ./scripts/install_nodejs.sh
-            ./scripts/install_nodejs.sh
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
@@ -30,7 +25,7 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run: mvn test integration-test
+      - run: mvn clean test
 
   deploy:
     docker:
@@ -40,11 +35,6 @@ jobs:
       MAVEN_OPTS: -Xmx3200m
     steps:
       - checkout
-      - run:
-          name: install node via NVM
-          command: |
-            chmod +x ./scripts/install_nodejs.sh
-            ./scripts/install_nodejs.sh
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
@@ -65,14 +55,18 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build
+      - build:
+          filters:
+            tags:
+              only: /.*/
       - deploy:
           requires:
             - build
           filters:
-            # ignore any commit on any branch by default
-            branches:
-              ignore: /.*/
             # only act on version tags
             tags:
               only: /^v\d+\.\d+\.\d+$/
+            # ignore any commit on any branch by default
+            branches:
+              ignore: /.*/
+

@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin-parent</artifactId>
-        <version>1.3.3</version>
+        <version>2.0.0</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -16,11 +16,14 @@
     <url>https://github.com/Sparow199/apollo-client-maven-plugin.git</url>
 
     <properties>
-        <maven.install.skip>true</maven.install.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <apollo-runtime.version>1.0.2</apollo-runtime.version>
-        <apollo-client-maven-plugin.version>1.3.3</apollo-client-maven-plugin.version>
+
+        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+        <maven.install.skip>true</maven.install.skip>
+
+        <apollo-client-maven-plugin.version>2.0.0</apollo-client-maven-plugin.version>
+        <apollo-runtime.version>1.1.1</apollo-runtime.version>
         <assertj-core.version>3.13.2</assertj-core.version>
         <graphql-java-servlet.version>6.1.3</graphql-java-servlet.version>
         <graphql-java-tools.version>5.2.4</graphql-java-tools.version>
@@ -80,6 +83,7 @@
     </dependencies>
 
     <build>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>com.github.sparow199</groupId>
@@ -93,32 +97,59 @@
                         <configuration>
                             <skip>false</skip>
                             <addSourceRoot>true</addSourceRoot>
-                            <basePackage>com.lahzouz.java.graphql.client.tests</basePackage>
+                            <generateIntrospectionFile>false</generateIntrospectionFile>
+                            <sourceDirName>${project.basedir}/src/main/graphql</sourceDirName>
                             <introspectionFile>${project.basedir}/src/main/graphql/schema.json</introspectionFile>
+                            <irPackageName>com.lahzouz.java.graphql.client.tests</irPackageName>
                             <outputPackage>com.lahzouz.java.graphql.client.tests</outputPackage>
-                            <outputDirectory>${project.build.directory}/generated-sources/graphql-client
-                            </outputDirectory>
+                            <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
                             <generateModelBuilder>true</generateModelBuilder>
                             <useJavaBeansSemanticNaming>true</useJavaBeansSemanticNaming>
                             <useSemanticNaming>true</useSemanticNaming>
                             <nullableValueType>JAVA_OPTIONAL</nullableValueType>
                             <suppressRawTypesWarning>false</suppressRawTypesWarning>
+                            <generateKotlinModels>false</generateKotlinModels>
+                            <generateVisitorForPolymorphicDatatypes>false</generateVisitorForPolymorphicDatatypes>
                             <customTypeMap>
                                 <Long>java.lang.Long</Long>
                             </customTypeMap>
-                            <generateKotlinModels>false</generateKotlinModels>
-                            <nodeExecutable>node</nodeExecutable>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>jcenter</id>
-            <url>https://jcenter.bintray.com/</url>
-        </repository>
-    </repositories>
 </project>

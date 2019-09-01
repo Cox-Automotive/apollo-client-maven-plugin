@@ -13,25 +13,23 @@ A full usage example can be found in the [test project](https://github.com/sparo
 
 ### Getting Started
 
-**NOTE: This plugin requires a nodejs environment to execute the bundled apollo-codegen node module.**
-
-1. Add the apollo runtime library and guava to your project's depedencies:
+1. Add the apollo runtime library to your project's dependencies:
 
     ```xml
     <dependency>
         <groupId>com.apollographql.apollo</groupId>
         <artifactId>apollo-runtime</artifactId>
-        <version>1.0.2</version>
+        <version>1.1.1</version>
     </dependency>
     ```
 
-2. Add the code generator plugin to your project's build (if codegen is desired):
+2. Add the code generator plugin to your project's build:
 
     ```xml
     <plugin>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>1.3.3</version>
+        <version>2.0.0</version>
         <executions>
             <execution>
                 <goals>
@@ -65,7 +63,9 @@ All plugin options and their defaults:
     <basePackage>com.example.graphql.client</basePackage>
     <introspectionFile>${project.basedir}/src/main/graphql/schema.json</introspectionFile>
     <generateIntrospectionFile>false</generateIntrospectionFile>
+    <sourceDirName>${project.basedir}/src/main/graphql</sourceDirName>
     <schemaUrl>http://localhost</schemaUrl>
+    <irPackageName>com.example.graphql.client</irPackageName>
     <outputPackage>com.example.graphql.client</basePackage>
     <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
     <generateModelBuilder>true</generateModelBuilder>
@@ -73,9 +73,9 @@ All plugin options and their defaults:
     <useSemanticNaming>true</useSemanticNaming>
     <nullableValueType>JAVA_OPTIONAL</nullableValueType>
     <suppressRawTypesWarning>false</suppressRawTypesWarning>
-    <customTypeMap></customTypeMap>
     <generateKotlinModels>false</generateKotlinModels>
-    <nodeExecutable>node</nodeExecutable>
+    <generateVisitorForPolymorphicDatatypes>false</generateVisitorForPolymorphicDatatypes>
+    <customTypeMap></customTypeMap>
 </configuration>
 ```
 

@@ -28,7 +28,7 @@ import javax.servlet.Servlet
  * @author Sparow199
  */
 @TestInstance(PER_CLASS)
-class IntegrationSpec {
+class ApolloClientMavenPluginTest {
 
     private lateinit var server: Undertow
     private var port: Int = 0
@@ -96,7 +96,7 @@ class IntegrationSpec {
         )
         assertThat(data).isNotEmpty
 
-        File("src/main/graphql/schema.json").writeText(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data["data"]))
+//        File("src/main/graphql/schema.json").writeText(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data))
     }
 
     @Test
