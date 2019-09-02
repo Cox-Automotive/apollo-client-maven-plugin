@@ -32,10 +32,10 @@ class GraphQLClientMojo : AbstractMojo() {
     private lateinit var project: MavenProject
 
     @Parameter(property = "outputDirectory", defaultValue = "\${project.build.directory}/generated-sources/graphql-client")
-    lateinit var outputDirectory: File
+    private lateinit var outputDirectory: File
 
-    @Parameter(readonly = true, property = "introspectionFile", defaultValue = "\${project.basedir}/src/main/graphql/schema.json")
-    lateinit var introspectionFile: File
+    @Parameter(property = "introspectionFile", defaultValue = "\${project.basedir}/src/main/graphql/schema.json")
+    private lateinit var introspectionFile: File
 
     @Parameter(property = "irPackageName", defaultValue = "com.example.graphql.client")
     private lateinit var irPackageName: String
@@ -43,7 +43,7 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "outputPackage", defaultValue = "com.example.graphql.client")
     private lateinit var outputPackage: String
 
-    @Parameter(property = "schemaUrl", defaultValue = "http://localhost")
+    @Parameter(property = "schemaUrl", defaultValue = "http://localhost/graphql")
     private lateinit var schemaUrl: String
 
     @Parameter(property = "sourceDirName", defaultValue = "\${project.basedir}/src/main/graphql")
@@ -53,33 +53,33 @@ class GraphQLClientMojo : AbstractMojo() {
     private var customTypeMap: Map<String, String> = emptyMap()
 
     @Parameter(property = "nullableValueType", defaultValue = "JAVA_OPTIONAL")
-    private var nullableValueType: NullableValueType = NullableValueType.JAVA_OPTIONAL
+    private lateinit var nullableValueType: NullableValueType
 
-    @Parameter(property = "generateIntrospectionFile", defaultValue = "false")
+    @Parameter(property = "generateIntrospectionFile")
     private var generateIntrospectionFile: Boolean = false
 
-    @Parameter(property = "skip", defaultValue = "false")
+    @Parameter(property = "skip")
     private var skip: Boolean = false
 
-    @Parameter(property = "addSourceRoot", defaultValue = "true")
+    @Parameter(property = "addSourceRoot")
     private var addSourceRoot: Boolean = true
 
-    @Parameter(property = "useSemanticNaming", defaultValue = "true")
+    @Parameter(property = "useSemanticNaming")
     private var useSemanticNaming: Boolean = true
 
-    @Parameter(property = "generateModelBuilder", defaultValue = "true")
+    @Parameter(property = "generateModelBuilder")
     private var generateModelBuilder: Boolean = true
 
-    @Parameter(property = "suppressRawTypesWarning", defaultValue = "false")
+    @Parameter(property = "suppressRawTypesWarning")
     private var suppressRawTypesWarning: Boolean = false
 
-    @Parameter(property = "useJavaBeansSemanticNaming", defaultValue = "true")
+    @Parameter(property = "useJavaBeansSemanticNaming")
     private var useJavaBeansSemanticNaming: Boolean = true
 
-    @Parameter(property = "generateKotlinModels", defaultValue = "false")
+    @Parameter(property = "generateKotlinModels")
     private var generateKotlinModels: Boolean = false
 
-    @Parameter(property = "generateVisitorForPolymorphicDatatypes", defaultValue = "false")
+    @Parameter(property = "generateVisitorForPolymorphicDatatypes")
     private var generateVisitorForPolymorphicDatatypes: Boolean = true
 
     @Throws(MojoExecutionException::class)

@@ -64,9 +64,9 @@ All plugin options and their defaults:
     <introspectionFile>${project.basedir}/src/main/graphql/schema.json</introspectionFile>
     <generateIntrospectionFile>false</generateIntrospectionFile>
     <sourceDirName>${project.basedir}/src/main/graphql</sourceDirName>
-    <schemaUrl>http://localhost</schemaUrl>
+    <schemaUrl>http://localhost/graphql</schemaUrl>
     <irPackageName>com.example.graphql.client</irPackageName>
-    <outputPackage>com.example.graphql.client</basePackage>
+    <outputPackage>com.example.graphql.client</outputPackage>
     <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
     <generateModelBuilder>true</generateModelBuilder>
     <useJavaBeansSemanticNaming>true</useJavaBeansSemanticNaming>
@@ -133,6 +133,40 @@ client.newCall(new GetBooks())
         ...
     }
     });
+```
+
+#### Wrap ApolloCall with a CompletableFuture
+
+If you miss **apolloCall.execute** method, which execute a query synchronously, you could wrap **apolloCall.enqueue**
+with a CompletableFuture and call **join** method to wait for the response
+
+```java
+public class ApolloClientUtils {
+
+    public static <T> CompletableFuture<Response<T>> toCompletableFuture(ApolloCall<T> apolloCall) {
+        CompletableFuture<Response<T>> completableFuture = new CompletableFuture<>();
+
+        completableFuture.whenComplete((tResponse, throwable) -> {
+            if (completableFuture.isCancelled()) {
+                completableFuture.cancel(true);
+            }
+        });
+
+        apolloCall.enqueue(new ApolloCall.Callback<T>() {
+            @Override
+            public void onResponse(@NotNull Response<T> response) {
+                completableFuture.complete(response);
+            }
+
+            @Override
+            public void onFailure(@NotNull ApolloException e) {
+                completableFuture.completeExceptionally(e);
+            }
+        });
+
+        return completableFuture;
+    }
+}
 ```
 
 Properties specified as nullable in the schema will have an java 8 `java.util.optional` type.

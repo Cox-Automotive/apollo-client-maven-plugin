@@ -96,7 +96,7 @@ class ApolloClientMavenPluginTest {
         )
         assertThat(data).isNotEmpty
 
-//        File("src/main/graphql/schema.json").writeText(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data))
+        File("src/main/graphql/schema.json").writeText(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(data))
     }
 
     @Test
