@@ -140,6 +140,6 @@ object Introspection {
             "    }\\n" +
             "  "
 
-    private const val introspectionQuery = "{\"query\": \"$rawIntrospectionQuery\",\"variables\":{},\"operationName\":introspection}"
+    private const val introspectionQuery = "{\"query\": \"$rawIntrospectionQuery\",\"variables\":{},\"operationName\":\"introspection\"}"
 
 }
