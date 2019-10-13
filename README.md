@@ -16,11 +16,23 @@ A full usage example can be found in the [test project](https://github.com/sparo
 1. Add the apollo runtime library to your project's dependencies:
 
     ```xml
-    <dependency>
-        <groupId>com.apollographql.apollo</groupId>
-        <artifactId>apollo-runtime</artifactId>
-        <version>1.1.1</version>
-    </dependency>
+    <dependencies>
+       <dependency>
+           <groupId>com.apollographql.apollo</groupId>
+           <artifactId>apollo-runtime</artifactId>
+           <version>1.2.0</version>
+       </dependency>
+       <dependency>
+           <groupId>org.jetbrains</groupId>
+           <artifactId>annotations</artifactId>
+           <version>17.0.0</version>
+       </dependency>
+       <dependency>
+           <groupId>org.jetbrains.kotlin</groupId>
+           <artifactId>kotlin-reflect</artifactId>
+           <version>1.3.50</version>
+       </dependency>
+    </dependencies>
     ```
 
 2. Add the code generator plugin to your project's build:
@@ -29,7 +41,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <plugin>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0</version>
         <executions>
             <execution>
                 <goals>
@@ -62,11 +74,13 @@ All plugin options and their defaults:
     <addSourceRoot>true</addSourceRoot>
     <basePackage>com.example.graphql.client</basePackage>
     <introspectionFile>${project.basedir}/src/main/graphql/schema.json</introspectionFile>
+    <generateTransformedQueries>false</generateTransformedQueries>
+    <transformedQueriesOutputDir>${project.build.directory}/generated-sources/graphql-client/transformedQueries</transformedQueriesOutputDir>
     <generateIntrospectionFile>false</generateIntrospectionFile>
     <sourceDirName>${project.basedir}/src/main/graphql</sourceDirName>
     <schemaUrl>http://localhost/graphql</schemaUrl>
-    <irPackageName>com.example.graphql.client</irPackageName>
-    <outputPackage>com.example.graphql.client</outputPackage>
+    <rootPackageName>com.example.graphql.client</rootPackageName>
+    <schemaPackageName>schema</schemaPackageName>
     <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
     <generateModelBuilder>true</generateModelBuilder>
     <useJavaBeansSemanticNaming>true</useJavaBeansSemanticNaming>

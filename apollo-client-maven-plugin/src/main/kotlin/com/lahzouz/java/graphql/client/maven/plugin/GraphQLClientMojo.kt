@@ -2,6 +2,7 @@ package com.lahzouz.java.graphql.client.maven.plugin
 
 import com.apollographql.apollo.compiler.GraphQLCompiler
 import com.apollographql.apollo.compiler.NullableValueType
+import com.apollographql.apollo.compiler.PackageNameProvider
 import com.apollographql.apollo.compiler.parser.GraphQLDocumentParser
 import com.apollographql.apollo.compiler.parser.Schema
 import com.lahzouz.java.graphql.client.maven.plugin.Introspection.getIntrospectionSchema
@@ -31,17 +32,20 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(defaultValue = "\${project}")
     private lateinit var project: MavenProject
 
-    @Parameter(property = "outputDirectory", defaultValue = "\${project.build.directory}/generated-sources/graphql-client")
-    private lateinit var outputDirectory: File
-
     @Parameter(property = "introspectionFile", defaultValue = "\${project.basedir}/src/main/graphql/schema.json")
     private lateinit var introspectionFile: File
 
-    @Parameter(property = "irPackageName", defaultValue = "com.example.graphql.client")
-    private lateinit var irPackageName: String
+    @Parameter(property = "transformedQueriesOutputDir", defaultValue = "\${project.build.directory}/generated-sources/graphql-client/transformed")
+    private var transformedQueriesOutputDir: File? = null
 
-    @Parameter(property = "outputPackage", defaultValue = "com.example.graphql.client")
-    private lateinit var outputPackage: String
+    @Parameter(property = "outputDirectory", defaultValue = "\${project.build.directory}/generated-sources/graphql-client")
+    private lateinit var outputDirectory: File
+
+    @Parameter(property = "rootPackageName", defaultValue = "com.example.graphql.client")
+    private lateinit var rootPackageName: String
+
+    @Parameter(property = "schemaPackageName", defaultValue = "schema")
+    private lateinit var schemaPackageName: String
 
     @Parameter(property = "schemaUrl", defaultValue = "http://localhost/graphql")
     private lateinit var schemaUrl: String
@@ -54,6 +58,9 @@ class GraphQLClientMojo : AbstractMojo() {
 
     @Parameter(property = "nullableValueType", defaultValue = "JAVA_OPTIONAL")
     private lateinit var nullableValueType: NullableValueType
+
+    @Parameter(property = "generateTransformedQueries")
+    private var generateTransformedQueries: Boolean = false
 
     @Parameter(property = "generateIntrospectionFile")
     private var generateIntrospectionFile: Boolean = false
@@ -121,12 +128,16 @@ class GraphQLClientMojo : AbstractMojo() {
             throw MojoExecutionException("Introspection schema file not found: ${introspectionFile.absolutePath}")
         }
 
-        val graphQLDocumentParser = GraphQLDocumentParser(Schema(introspectionFile))
+        if (!generateTransformedQueries) {
+            transformedQueriesOutputDir = null
+        }
+
+        val packageNameProvider = PackageNameProvider(rootPackageName, schemaPackageName, null)
+        val graphQLDocumentParser = GraphQLDocumentParser(Schema(introspectionFile), packageNameProvider)
         val ir = graphQLDocumentParser.parse(queries)
 
         val compiler = GraphQLCompiler()
         compiler.write(GraphQLCompiler.Arguments(
-                irFile = introspectionFile,
                 ir = ir,
                 outputDir = outputDirectory,
                 customTypeMap = customTypeMap,
@@ -134,8 +145,8 @@ class GraphQLClientMojo : AbstractMojo() {
                 useSemanticNaming = useSemanticNaming,
                 generateModelBuilder = generateModelBuilder,
                 useJavaBeansSemanticNaming = useJavaBeansSemanticNaming,
-                irPackageName = irPackageName,
-                outputPackageName = outputPackage,
+                packageNameProvider = packageNameProvider,
+                transformedQueriesOutputDir = transformedQueriesOutputDir,
                 suppressRawTypesWarning = suppressRawTypesWarning,
                 generateKotlinModels = generateKotlinModels,
                 generateVisitorForPolymorphicDatatypes = generateVisitorForPolymorphicDatatypes)
@@ -147,6 +158,5 @@ class GraphQLClientMojo : AbstractMojo() {
         }
         log.info("Apollo GraphQL Client Code Generation task finished")
     }
-
 
 }
