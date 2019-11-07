@@ -7,7 +7,7 @@ import com.coxautodev.graphql.tools.SchemaParser
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lahzouz.java.graphql.client.tests.queries.GetBooksQuery
 import com.lahzouz.java.graphql.client.tests.queries.author.GetAuthorsQuery
-import com.lahzouz.java.graphql.client.tests.schema.type.CustomType
+import com.lahzouz.java.graphql.client.tests.type.CustomType
 import graphql.schema.GraphQLSchema
 import graphql.servlet.DefaultGraphQLSchemaProvider
 import graphql.servlet.GraphQLInvocationInputFactory

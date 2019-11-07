@@ -20,12 +20,13 @@ A full usage example can be found in the [test project](https://github.com/sparo
        <dependency>
            <groupId>com.apollographql.apollo</groupId>
            <artifactId>apollo-runtime</artifactId>
-           <version>1.2.0</version>
+           <version>1.2.1</version>
        </dependency>
+       <!-- Optional, needed only for ANNOTATED nullable type-->
        <dependency>
            <groupId>org.jetbrains</groupId>
            <artifactId>annotations</artifactId>
-           <version>17.0.0</version>
+           <version>18.0.0</version>
        </dependency>
        <dependency>
            <groupId>org.jetbrains.kotlin</groupId>
@@ -72,7 +73,6 @@ All plugin options and their defaults:
 <configuration>
     <skip>false</skip>
     <addSourceRoot>true</addSourceRoot>
-    <basePackage>com.example.graphql.client</basePackage>
     <introspectionFile>${project.basedir}/src/main/graphql/schema.json</introspectionFile>
     <generateTransformedQueries>false</generateTransformedQueries>
     <transformedQueriesOutputDir>${project.build.directory}/generated-sources/graphql-client/transformedQueries</transformedQueriesOutputDir>
@@ -80,7 +80,6 @@ All plugin options and their defaults:
     <sourceDirName>${project.basedir}/src/main/graphql</sourceDirName>
     <schemaUrl>http://localhost/graphql</schemaUrl>
     <rootPackageName>com.example.graphql.client</rootPackageName>
-    <schemaPackageName>schema</schemaPackageName>
     <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
     <generateModelBuilder>true</generateModelBuilder>
     <useJavaBeansSemanticNaming>true</useJavaBeansSemanticNaming>

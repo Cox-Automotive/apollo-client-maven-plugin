@@ -23,7 +23,7 @@
         <maven.install.skip>true</maven.install.skip>
 
         <apollo-client-maven-plugin.version>2.1.1-SNAPSHOT</apollo-client-maven-plugin.version>
-        <apollo-runtime.version>1.2.0</apollo-runtime.version>
+        <apollo-runtime.version>1.2.1</apollo-runtime.version>
         <assertj-core.version>3.13.2</assertj-core.version>
         <graphql-java-servlet.version>6.1.3</graphql-java-servlet.version>
         <graphql-java-tools.version>5.2.4</graphql-java-tools.version>
@@ -103,7 +103,6 @@
                             <generateTransformedQueries>false</generateTransformedQueries>
                             <transformedQueriesOutputDir>${project.build.directory}/generated-sources/graphql-client/transformed</transformedQueriesOutputDir>
                             <rootPackageName>com.lahzouz.java.graphql.client.tests</rootPackageName>
-                            <schemaPackageName>schema</schemaPackageName>
                             <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
                             <generateModelBuilder>true</generateModelBuilder>
                             <useJavaBeansSemanticNaming>true</useJavaBeansSemanticNaming>

@@ -1,8 +1,8 @@
 package com.lahzouz.java.graphql.client.maven.plugin
 
+import com.apollographql.apollo.compiler.DefaultPackageNameProvider
 import com.apollographql.apollo.compiler.GraphQLCompiler
 import com.apollographql.apollo.compiler.NullableValueType
-import com.apollographql.apollo.compiler.PackageNameProvider
 import com.apollographql.apollo.compiler.parser.GraphQLDocumentParser
 import com.apollographql.apollo.compiler.parser.Schema
 import com.lahzouz.java.graphql.client.maven.plugin.Introspection.getIntrospectionSchema
@@ -43,9 +43,6 @@ class GraphQLClientMojo : AbstractMojo() {
 
     @Parameter(property = "rootPackageName", defaultValue = "com.example.graphql.client")
     private lateinit var rootPackageName: String
-
-    @Parameter(property = "schemaPackageName", defaultValue = "schema")
-    private lateinit var schemaPackageName: String
 
     @Parameter(property = "schemaUrl", defaultValue = "http://localhost/graphql")
     private lateinit var schemaUrl: String
@@ -132,7 +129,11 @@ class GraphQLClientMojo : AbstractMojo() {
             transformedQueriesOutputDir = null
         }
 
-        val packageNameProvider = PackageNameProvider(rootPackageName, schemaPackageName, null)
+        val packageNameProvider = DefaultPackageNameProvider(
+                rootFolders = listOf(sourceDirName),
+                schemaFile = introspectionFile,
+                rootPackageName = rootPackageName
+        )
         val graphQLDocumentParser = GraphQLDocumentParser(Schema(introspectionFile), packageNameProvider)
         val ir = graphQLDocumentParser.parse(queries)
 
