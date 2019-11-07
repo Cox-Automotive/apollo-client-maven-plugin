@@ -42,14 +42,14 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <plugin>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>2.1.0</version>
+        <version>2.2.0</version>
         <executions>
             <execution>
                 <goals>
                     <goal>generate</goal>
                 </goals>
                 <configuration>
-                    <basePackage>com.my.package.graphql.client</basePackage>
+                        <rootPackageName>com.example.graphql.client</rootPackageName>
                 </configuration>
             </execution>
         </executions>
