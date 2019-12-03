@@ -20,7 +20,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
        <dependency>
            <groupId>com.apollographql.apollo</groupId>
            <artifactId>apollo-runtime</artifactId>
-           <version>1.2.1</version>
+           <version>1.2.2</version>
        </dependency>
        <!-- Optional, needed only for ANNOTATED nullable type-->
        <dependency>
@@ -31,7 +31,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
        <dependency>
            <groupId>org.jetbrains.kotlin</groupId>
            <artifactId>kotlin-reflect</artifactId>
-           <version>1.3.50</version>
+           <version>1.3.61</version>
        </dependency>
     </dependencies>
     ```
@@ -42,7 +42,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <plugin>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>2.2.0</version>
+        <version>2.2.1-SNAPSHOT</version>
         <executions>
             <execution>
                 <goals>
@@ -60,9 +60,9 @@ A full usage example can be found in the [test project](https://github.com/sparo
 automatically generate this file by setting `generateIntrospectionFile` to true and `schemaUrl` to your GraphQL endpoint. At build time, the plugin will query the server and install this file
 per the value of `introspectionFile`.
 4. Create files for each query you'd like to generate classes for under `src/main/graphql`:
-       1.  Query file names must match the name of the query they contain
-       2.  Query files must end with `.graphql`
-       3.  Any subdirectories under `src/main/graphql` are treated as extra package names to append to `packageName` in the plugin config.
+    1. Query file names must match the name of the query they contain
+    2. Query files must end with `.graphql`
+    3. Any subdirectories under `src/main/graphql` are treated as extra package names to append to `packageName` in the plugin config.
 5. Run `mvn clean generate-sources` to generate classes for your queries.
 
 ### Configuration Options
@@ -87,6 +87,7 @@ All plugin options and their defaults:
     <nullableValueType>JAVA_OPTIONAL</nullableValueType>
     <suppressRawTypesWarning>false</suppressRawTypesWarning>
     <generateKotlinModels>false</generateKotlinModels>
+    <generateAsInternal>false</generateAsInternal>
     <generateVisitorForPolymorphicDatatypes>false</generateVisitorForPolymorphicDatatypes>
     <customTypeMap></customTypeMap>
 </configuration>
@@ -182,4 +183,4 @@ public class ApolloClientUtils {
 }
 ```
 
-Properties specified as nullable in the schema will have an java 8 `java.util.optional` type.
+Properties specified as nullable in the schema will have a java 8 `java.util.optional` type.

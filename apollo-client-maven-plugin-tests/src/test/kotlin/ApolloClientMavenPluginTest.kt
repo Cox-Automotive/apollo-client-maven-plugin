@@ -27,7 +27,7 @@ import javax.servlet.Servlet
 
 
 /**
- * @author Sparow199
+ * @author AOUDIA Moncef
  */
 @TestInstance(PER_CLASS)
 class ApolloClientMavenPluginTest {

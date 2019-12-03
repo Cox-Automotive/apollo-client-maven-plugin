@@ -83,6 +83,9 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "generateKotlinModels")
     private var generateKotlinModels: Boolean = false
 
+    @Parameter(property = "generateAsInternal")
+    private var generateAsInternal: Boolean = false
+
     @Parameter(property = "generateVisitorForPolymorphicDatatypes")
     private var generateVisitorForPolymorphicDatatypes: Boolean = true
 
@@ -150,6 +153,7 @@ class GraphQLClientMojo : AbstractMojo() {
                 transformedQueriesOutputDir = transformedQueriesOutputDir,
                 suppressRawTypesWarning = suppressRawTypesWarning,
                 generateKotlinModels = generateKotlinModels,
+                generateAsInternal = generateAsInternal,
                 generateVisitorForPolymorphicDatatypes = generateVisitorForPolymorphicDatatypes)
         )
 
