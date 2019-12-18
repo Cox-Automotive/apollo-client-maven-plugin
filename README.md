@@ -79,6 +79,7 @@ All plugin options and their defaults:
     <generateIntrospectionFile>false</generateIntrospectionFile>
     <sourceDirName>${project.basedir}/src/main/graphql</sourceDirName>
     <schemaUrl>http://localhost/graphql</schemaUrl>
+    <schemaUrlHeaders></schemaUrlHeaders>
     <rootPackageName>com.example.graphql.client</rootPackageName>
     <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
     <generateModelBuilder>true</generateModelBuilder>
