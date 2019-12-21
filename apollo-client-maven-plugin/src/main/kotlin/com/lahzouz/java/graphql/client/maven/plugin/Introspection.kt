@@ -11,7 +11,7 @@ import java.nio.charset.Charset
 
 object Introspection {
 
-    fun getIntrospectionSchema(host: String): String {
+    fun getIntrospectionSchema(host: String, customHeaders: Map<String, String>): String {
         val client = HttpClients.custom()
                 .disableContentCompression()
                 .build()
@@ -25,6 +25,7 @@ object Introspection {
             setHeader(HttpHeaders.ACCEPT_ENCODING, "gzip, identity")
             setHeader(HttpHeaders.ACCEPT_CHARSET, "utf-8")
             setHeader(HttpHeaders.USER_AGENT, "Apollo Client Maven Plugin")
+            customHeaders.forEach { (name, value) -> setHeader(name, value) }
         }
         val response = client.execute(request)
         var schema = ""

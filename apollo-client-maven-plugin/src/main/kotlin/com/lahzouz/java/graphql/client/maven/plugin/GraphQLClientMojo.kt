@@ -47,6 +47,9 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "schemaUrl", defaultValue = "http://localhost/graphql")
     private lateinit var schemaUrl: String
 
+    @Parameter(property = "schemaUrlHeaders")
+    private var customHeaders: Map<String, String> = emptyMap()
+
     @Parameter(property = "sourceDirName", defaultValue = "\${project.basedir}/src/main/graphql")
     private lateinit var sourceDirName: String
 
@@ -116,7 +119,7 @@ class GraphQLClientMojo : AbstractMojo() {
 
         if (generateIntrospectionFile) {
             log.info("Automatically generating introspection file from $schemaUrl")
-            val schema = getIntrospectionSchema(schemaUrl)
+            val schema = getIntrospectionSchema(schemaUrl, customHeaders)
             if (schema.isNotEmpty()) {
                 File(introspectionFile.toURI()).writeText(schema)
             } else {
