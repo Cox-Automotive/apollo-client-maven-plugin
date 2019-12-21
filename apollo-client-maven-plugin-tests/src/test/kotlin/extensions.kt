@@ -6,7 +6,7 @@ import com.apollographql.apollo.exception.ApolloException
 import java.util.concurrent.CompletableFuture
 
 /**
- * @author Sparow199
+ * @author AOUDIA Moncef
  */
 fun <T> ApolloCall<T>.toCompletableFuture(): CompletableFuture<Response<T>> {
     val completableFuture = CompletableFuture<Response<T>>()

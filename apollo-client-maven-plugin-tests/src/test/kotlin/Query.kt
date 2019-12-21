@@ -3,7 +3,7 @@ package com.lahzouz.java.graphql.client.tests
 import com.coxautodev.graphql.tools.GraphQLQueryResolver
 
 /**
- * @author Sparow199
+ * @author AOUDIA Moncef
  */
 class Query : GraphQLQueryResolver {
 
