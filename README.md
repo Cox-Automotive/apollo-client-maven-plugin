@@ -20,7 +20,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
        <dependency>
            <groupId>com.apollographql.apollo</groupId>
            <artifactId>apollo-runtime</artifactId>
-           <version>1.2.2</version>
+           <version>1.2.3</version>
        </dependency>
        <!-- Optional, needed only for ANNOTATED nullable type-->
        <dependency>
@@ -42,7 +42,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
     <plugin>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>2.2.1</version>
+        <version>2.2.3</version>
         <executions>
             <execution>
                 <goals>
@@ -105,6 +105,8 @@ Available nullable types:
     JAVA_OPTIONAL
     INPUT_TYPE
 ```
+
+Properties specified as nullable in the schema will have a java 8 `java.util.optional` type.
 
 #### Custom Types
 
@@ -183,5 +185,6 @@ public class ApolloClientUtils {
     }
 }
 ```
+#### Using Apollo without `apollo-runtime`
 
-Properties specified as nullable in the schema will have a java 8 `java.util.optional` type.
+See [documentation](https://www.apollographql.com/docs/android/advanced/no-runtime/)
