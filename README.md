@@ -104,7 +104,7 @@ Available nullable types:
     GUAVA_OPTIONAL
     JAVA_OPTIONAL
     INPUT_TYPE
-```
+```     
 
 Properties specified as nullable in the schema will have a java 8 `java.util.optional` type.
 
