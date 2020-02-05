@@ -3,6 +3,7 @@ package com.lahzouz.java.graphql.client.maven.plugin
 import com.apollographql.apollo.compiler.DefaultPackageNameProvider
 import com.apollographql.apollo.compiler.GraphQLCompiler
 import com.apollographql.apollo.compiler.NullableValueType
+import com.apollographql.apollo.compiler.OperationIdGenerator
 import com.apollographql.apollo.compiler.parser.GraphQLDocumentParser
 import com.apollographql.apollo.compiler.parser.Schema
 import com.lahzouz.java.graphql.client.maven.plugin.Introspection.getIntrospectionSchema
@@ -16,6 +17,7 @@ import org.apache.maven.project.MavenProject
 import java.io.File
 import java.nio.file.Files
 import java.util.stream.Collectors
+import kotlin.reflect.full.createInstance
 
 
 /**
@@ -34,9 +36,6 @@ class GraphQLClientMojo : AbstractMojo() {
 
     @Parameter(property = "introspectionFile", defaultValue = "\${project.basedir}/src/main/graphql/schema.json")
     private lateinit var introspectionFile: File
-
-    @Parameter(property = "transformedQueriesOutputDir", defaultValue = "\${project.build.directory}/generated-sources/graphql-client/transformed")
-    private var transformedQueriesOutputDir: File? = null
 
     @Parameter(property = "outputDirectory", defaultValue = "\${project.build.directory}/generated-sources/graphql-client")
     private lateinit var outputDirectory: File
@@ -59,8 +58,8 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "nullableValueType", defaultValue = "JAVA_OPTIONAL")
     private lateinit var nullableValueType: NullableValueType
 
-    @Parameter(property = "generateTransformedQueries")
-    private var generateTransformedQueries: Boolean = false
+    @Parameter(property = "operationIdGeneratorClass")
+    private var operationIdGeneratorClass: String = ""
 
     @Parameter(property = "generateIntrospectionFile")
     private var generateIntrospectionFile: Boolean = false
@@ -131,8 +130,11 @@ class GraphQLClientMojo : AbstractMojo() {
             throw MojoExecutionException("Introspection schema file not found: ${introspectionFile.absolutePath}")
         }
 
-        if (!generateTransformedQueries) {
-            transformedQueriesOutputDir = null
+        val operationIdGenerator = if (operationIdGeneratorClass.isEmpty()) {
+            Class.forName("com.apollographql.apollo.compiler.OperationIdGenerator\$Sha256").kotlin
+                    .createInstance() as OperationIdGenerator
+        } else {
+            Class.forName(operationIdGeneratorClass).kotlin.createInstance() as OperationIdGenerator
         }
 
         val packageNameProvider = DefaultPackageNameProvider(
@@ -153,7 +155,7 @@ class GraphQLClientMojo : AbstractMojo() {
                 generateModelBuilder = generateModelBuilder,
                 useJavaBeansSemanticNaming = useJavaBeansSemanticNaming,
                 packageNameProvider = packageNameProvider,
-                transformedQueriesOutputDir = transformedQueriesOutputDir,
+                operationIdGenerator = operationIdGenerator,
                 suppressRawTypesWarning = suppressRawTypesWarning,
                 generateKotlinModels = generateKotlinModels,
                 generateAsInternal = generateAsInternal,

@@ -15,46 +15,46 @@ A full usage example can be found in the [test project](https://github.com/sparo
 
 1. Add the apollo runtime library to your project's dependencies:
 
-    ```xml
-    <dependencies>
-       <dependency>
-           <groupId>com.apollographql.apollo</groupId>
-           <artifactId>apollo-runtime</artifactId>
-           <version>1.2.3</version>
-       </dependency>
-       <!-- Optional, needed only for ANNOTATED nullable type-->
-       <dependency>
-           <groupId>org.jetbrains</groupId>
-           <artifactId>annotations</artifactId>
-           <version>18.0.0</version>
-       </dependency>
-       <dependency>
-           <groupId>org.jetbrains.kotlin</groupId>
-           <artifactId>kotlin-reflect</artifactId>
-           <version>1.3.61</version>
-       </dependency>
-    </dependencies>
-    ```
+```xml
+<dependencies>
+   <dependency>
+       <groupId>com.apollographql.apollo</groupId>
+       <artifactId>apollo-runtime</artifactId>
+       <version>1.3.0</version>
+   </dependency>
+   <!-- Optional, needed only for ANNOTATED nullable type-->
+   <dependency>
+       <groupId>org.jetbrains</groupId>
+       <artifactId>annotations</artifactId>
+       <version>18.0.0</version>
+   </dependency>
+   <dependency>
+       <groupId>org.jetbrains.kotlin</groupId>
+       <artifactId>kotlin-reflect</artifactId>
+       <version>1.3.61</version>
+   </dependency>
+</dependencies>
+```
 
 2. Add the code generator plugin to your project's build:
 
-    ```xml
-    <plugin>
-        <groupId>com.github.sparow199</groupId>
-        <artifactId>apollo-client-maven-plugin</artifactId>
-        <version>2.2.3</version>
-        <executions>
-            <execution>
-                <goals>
-                    <goal>generate</goal>
-                </goals>
-                <configuration>
-                        <rootPackageName>com.example.graphql.client</rootPackageName>
-                </configuration>
-            </execution>
-        </executions>
-    </plugin>
-    ```
+```xml
+<plugin>
+    <groupId>com.github.sparow199</groupId>
+    <artifactId>apollo-client-maven-plugin</artifactId>
+    <version>2.3.0</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+            <configuration>
+                    <rootPackageName>com.example.graphql.client</rootPackageName>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
 
 3. Create a file `src/main/graphql/schema.json` with the JSON results of an [introspection query](https://gist.github.com/Sparow199/a59527016e16a2d56309d62e01ff2348) OR you can
 automatically generate this file by setting `generateIntrospectionFile` to true and `schemaUrl` to your GraphQL endpoint. At build time, the plugin will query the server and install this file
@@ -74,14 +74,13 @@ All plugin options and their defaults:
     <skip>false</skip>
     <addSourceRoot>true</addSourceRoot>
     <introspectionFile>${project.basedir}/src/main/graphql/schema.json</introspectionFile>
-    <generateTransformedQueries>false</generateTransformedQueries>
-    <transformedQueriesOutputDir>${project.build.directory}/generated-sources/graphql-client/transformedQueries</transformedQueriesOutputDir>
     <generateIntrospectionFile>false</generateIntrospectionFile>
     <sourceDirName>${project.basedir}/src/main/graphql</sourceDirName>
     <schemaUrl>http://localhost/graphql</schemaUrl>
     <schemaUrlHeaders></schemaUrlHeaders>
     <rootPackageName>com.example.graphql.client</rootPackageName>
     <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
+    <operationIdGeneratorClass>com.apollographql.apollo.compiler.OperationIdGenerator$Sha256</operationIdGeneratorClass>
     <generateModelBuilder>true</generateModelBuilder>
     <useJavaBeansSemanticNaming>true</useJavaBeansSemanticNaming>
     <useSemanticNaming>true</useSemanticNaming>
@@ -99,11 +98,11 @@ All plugin options and their defaults:
 Available nullable types:
 
 ```java
-    ANNOTATED
-    APOLLO_OPTIONAL
-    GUAVA_OPTIONAL
-    JAVA_OPTIONAL
-    INPUT_TYPE
+ANNOTATED
+APOLLO_OPTIONAL
+GUAVA_OPTIONAL
+JAVA_OPTIONAL
+INPUT_TYPE
 ```     
 
 Properties specified as nullable in the schema will have a java 8 `java.util.optional` type.
