@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin-parent</artifactId>
-        <version>2.3.1</version>
+        <version>2.3.2-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
     <name>apollo-client-maven-plugin-tests</name>
     <description>Test for maven plugin</description>
-    <url>https://github.com/Sparow199/apollo-client-maven-plugin.git</url>
+    <url>https://github.com/aoudiamoncef/apollo-client-maven-plugin</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -101,8 +101,10 @@
                             <sourceDirName>${project.basedir}/src/main/graphql</sourceDirName>
                             <introspectionFile>${project.basedir}/src/main/graphql/schema.json</introspectionFile>
                             <rootPackageName>com.lahzouz.java.graphql.client.tests</rootPackageName>
-                            <outputDirectory>${project.build.directory}/generated-sources/graphql-client</outputDirectory>
-                            <operationIdGeneratorClass>com.apollographql.apollo.compiler.OperationIdGenerator$Sha256</operationIdGeneratorClass>
+                            <outputDirectory>${project.build.directory}/generated-sources/graphql-client
+                            </outputDirectory>
+                            <operationIdGeneratorClass>com.apollographql.apollo.compiler.OperationIdGenerator$Sha256
+                            </operationIdGeneratorClass>
                             <generateModelBuilder>true</generateModelBuilder>
                             <useJavaBeansSemanticNaming>true</useJavaBeansSemanticNaming>
                             <useSemanticNaming>true</useSemanticNaming>
