@@ -20,7 +20,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
    <dependency>
        <groupId>com.apollographql.apollo</groupId>
        <artifactId>apollo-runtime</artifactId>
-       <version>1.3.2</version>
+       <version>1.3.3</version>
    </dependency>
    <!-- Optional, needed only for ANNOTATED nullable type-->
    <dependency>
@@ -31,7 +31,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
    <dependency>
        <groupId>org.jetbrains.kotlin</groupId>
        <artifactId>kotlin-reflect</artifactId>
-       <version>1.3.61</version>
+       <version>1.3.70</version>
    </dependency>
 </dependencies>
 ```
@@ -42,7 +42,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
 <plugin>
     <groupId>com.github.sparow199</groupId>
     <artifactId>apollo-client-maven-plugin</artifactId>
-    <version>2.3.1</version>
+    <version>2.3.2</version>
     <executions>
         <execution>
             <goals>
