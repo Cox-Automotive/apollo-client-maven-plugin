@@ -1,8 +1,8 @@
 package com.lahzouz.java.graphql.client.tests
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.response.CustomTypeAdapter
-import com.apollographql.apollo.response.CustomTypeValue
+import com.apollographql.apollo.api.CustomTypeAdapter
+import com.apollographql.apollo.api.CustomTypeValue
 import com.coxautodev.graphql.tools.SchemaParser
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lahzouz.java.graphql.client.tests.queries.GetBooksQuery
