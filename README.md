@@ -20,7 +20,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
    <dependency>
        <groupId>com.apollographql.apollo</groupId>
        <artifactId>apollo-runtime</artifactId>
-       <version>1.4.3</version>
+       <version>1.4.4</version>
    </dependency>
    <!-- Optional, needed only for ANNOTATED nullable type-->
    <dependency>
@@ -42,7 +42,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
 <plugin>
     <groupId>com.github.sparow199</groupId>
     <artifactId>apollo-client-maven-plugin</artifactId>
-    <version>2.4.1</version>
+    <version>2.4.2</version>
     <executions>
         <execution>
             <goals>
