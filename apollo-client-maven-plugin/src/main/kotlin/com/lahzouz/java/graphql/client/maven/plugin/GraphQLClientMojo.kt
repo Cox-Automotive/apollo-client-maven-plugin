@@ -120,7 +120,10 @@ class GraphQLClientMojo : AbstractMojo() {
             log.info("Automatically generating introspection file from $schemaUrl")
             val schema = getIntrospectionSchema(schemaUrl, customHeaders)
             if (schema.isNotEmpty()) {
-                File(introspectionFile.toURI()).writeText(schema)
+                val remoteSchema = File(introspectionFile.toURI())
+                remoteSchema.parentFile?.mkdirs()
+                        ?: throw MojoExecutionException("Error, can't create introspection file parent directory")
+                remoteSchema.writeText(schema)
             } else {
                 throw MojoExecutionException("Error, can't generate introspection schema file from: $schemaUrl")
             }

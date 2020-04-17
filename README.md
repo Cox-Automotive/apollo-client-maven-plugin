@@ -42,7 +42,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
 <plugin>
     <groupId>com.github.sparow199</groupId>
     <artifactId>apollo-client-maven-plugin</artifactId>
-    <version>2.4.2</version>
+    <version>2.4.3</version>
     <executions>
         <execution>
             <goals>
