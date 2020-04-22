@@ -93,7 +93,7 @@ class ApolloClientMavenPluginTest {
         val data = mapper.readValue(
                 OkHttpClient().newCall(Request.Builder().url("http://127.0.0.1:$port/graphql/schema.json").build())
                         .execute()
-                        .body()?.byteStream(),
+                        .body?.byteStream(),
                 Map::class.java
         )
         assertThat(data).isNotEmpty

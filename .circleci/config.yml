@@ -50,6 +50,14 @@ jobs:
           name: Deploy the artifacts
           command: |
             mvn -s ./.circleci/.circleci.settings.xml -DskipTests deploy -P bintray
+  sync:
+    docker:
+      - image: byrnedo/alpine-curl:0.1.8
+    steps:
+      - run:
+          name: Sync version Artifacts to Maven Central
+          command: |
+            curl -d '{"username": "${SONATYPE_USER_TOKEN}", "password": "${SONATYPE_PASSWORD}"}' -H "Content-Type: application/json" -X POST https://bintray.com/maven_central_sync/sparow199/maven/apollo-client-maven-plugin/3.0.0
 
 workflows:
   version: 2
@@ -69,4 +77,14 @@ workflows:
             # ignore any commit on any branch by default
             branches:
               ignore: /.*/
-
+      - sync:
+          requires:
+            - build
+            - deploy
+          filters:
+            # only act on version tags
+            tags:
+              only: /^v\d+\.\d+\.\d+$/
+            # ignore any commit on any branch by default
+            branches:
+              ignore: /.*/
