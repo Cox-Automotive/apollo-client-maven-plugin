@@ -31,7 +31,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
    <dependency>
        <groupId>org.jetbrains.kotlin</groupId>
        <artifactId>kotlin-reflect</artifactId>
-       <version>1.6.6</version>
+       <version>1.3.71</version>
    </dependency>
 </dependencies>
 ```

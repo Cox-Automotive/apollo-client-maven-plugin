@@ -79,7 +79,6 @@ workflows:
               ignore: /.*/
       - sync:
           requires:
-            - build
             - deploy
           filters:
             # only act on version tags
