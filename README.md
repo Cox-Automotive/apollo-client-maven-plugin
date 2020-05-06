@@ -1,6 +1,6 @@
 # Apollo GraphQL Client Code Generation Maven Plugin
 
-[![CircleCI](https://circleci.com/gh/aoudiamoncef/apollo-client-maven-plugin.svg?style=svg)](https://circleci.com/gh/Sparow199/apollo-client-maven-plugin)
+[![CircleCI](https://circleci.com/gh/aoudiamoncef/apollo-client-maven-plugin.svg?style=svg)](https://circleci.com/gh/aoudiamoncef/apollo-client-maven-plugin)
 [![Download](https://api.bintray.com/packages/sparow199/maven/apollo-client-maven-plugin/images/download.svg)](https://bintray.com/sparow199/maven/apollo-client-maven-plugin/_latestVersion)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/71b115f870bb44478dac5d05abc9f378)](https://app.codacy.com/app/Sparow199/apollo-client-maven-plugin?utm_source=github.com&utm_medium=referral&utm_content=Sparow199/apollo-client-maven-plugin&utm_campaign=Badge_Grade_Dashboard)
 [![Known Vulnerabilities](https://snyk.io/test/github/sparow199/apollo-client-maven-plugin/badge.svg)](https://snyk.io/test/github/Sparow199/apollo-client-maven-plugin)
@@ -56,7 +56,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
 </plugin>
 ```
 
-3. Create a file `src/main/graphql/schema.json` with the JSON results of an [introspection query](https://gist.github.com/Sparow199/a59527016e16a2d56309d62e01ff2348) OR you can
+3. Create a file `src/main/graphql/schema.json` with the JSON results of an [introspection query](https://gist.github.com/aoudiamoncef/a59527016e16a2d56309d62e01ff2348) OR you can
 automatically generate this file by setting `generateIntrospectionFile` to true and `schemaUrl` to your GraphQL endpoint. At build time, the plugin will query the server and install this file
 per the value of `introspectionFile`.
 4. Create files for each query you'd like to generate classes for under `src/main/graphql`:
