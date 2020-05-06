@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin-parent</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.2</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -18,7 +18,7 @@
 
         <maven-plugin.version>3.6.0</maven-plugin.version>
         <maven-project.version>2.2.1</maven-project.version>
-        <apollo-compiler.version>2.0.1</apollo-compiler.version>
+        <apollo-compiler.version>2.0.2</apollo-compiler.version>
         <httpclient.version>4.5.11</httpclient.version>
         <okio.version>2.5.0</okio.version>
     </properties>
