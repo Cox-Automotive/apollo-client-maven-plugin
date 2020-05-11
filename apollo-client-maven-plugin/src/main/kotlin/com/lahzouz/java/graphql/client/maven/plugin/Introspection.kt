@@ -3,18 +3,47 @@ package com.lahzouz.java.graphql.client.maven.plugin
 import org.apache.http.HttpHeaders
 import org.apache.http.client.entity.GzipDecompressingEntity
 import org.apache.http.client.methods.HttpPost
+import org.apache.http.config.RegistryBuilder
+import org.apache.http.conn.socket.ConnectionSocketFactory
+import org.apache.http.conn.socket.PlainConnectionSocketFactory
+import org.apache.http.conn.ssl.NoopHostnameVerifier
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory
 import org.apache.http.entity.StringEntity
-import org.apache.http.impl.client.HttpClients
+import org.apache.http.impl.client.HttpClientBuilder
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager
+import org.apache.http.ssl.SSLContextBuilder
 import org.apache.http.util.EntityUtils
 import java.nio.charset.Charset
+import java.security.cert.X509Certificate
+import javax.net.ssl.SSLContext
 
 
 object Introspection {
 
-    fun getIntrospectionSchema(host: String, customHeaders: Map<String, String>): String {
-        val client = HttpClients.custom()
-                .disableContentCompression()
-                .build()
+
+    fun getIntrospectionSchema(host: String,
+                               useSelfSignedCertificat: Boolean,
+                               customHeaders: Map<String, String>): String {
+
+        var clientBuilder = HttpClientBuilder.create().disableContentCompression()
+
+        if (useSelfSignedCertificat) {
+            val sslContext: SSLContext = SSLContextBuilder()
+                    .loadTrustMaterial(null) { x509CertChain: Array<X509Certificate?>?, authType: String? -> true }
+                    .build()
+
+            clientBuilder = HttpClientBuilder.create()
+                    .setSSLContext(sslContext)
+                    .setConnectionManager(
+                            PoolingHttpClientConnectionManager(
+                                    RegistryBuilder.create<ConnectionSocketFactory>()
+                                            .register("http", PlainConnectionSocketFactory.INSTANCE)
+                                            .register("https", SSLConnectionSocketFactory(sslContext,
+                                                    NoopHostnameVerifier.INSTANCE))
+                                            .build()
+                            ))
+        }
+
         val request = HttpPost(host);
         val body = StringEntity(introspectionQuery)
 
@@ -27,6 +56,8 @@ object Introspection {
             setHeader(HttpHeaders.USER_AGENT, "Apollo Client Maven Plugin")
             customHeaders.forEach { (name, value) -> setHeader(name, value) }
         }
+
+        val client = clientBuilder.build()
         val response = client.execute(request)
         var schema = ""
         if (200 == response.statusLine.statusCode) {

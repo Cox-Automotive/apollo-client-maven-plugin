@@ -49,6 +49,9 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "schemaUrlHeaders")
     private var customHeaders: Map<String, String> = emptyMap()
 
+    @Parameter(property = "useSelfSignedCertificat")
+    private var useSelfSignedCertificat: Boolean = false
+
     @Parameter(property = "sourceDirName", defaultValue = "\${project.basedir}/src/main/graphql")
     private lateinit var sourceDirName: String
 
@@ -118,7 +121,7 @@ class GraphQLClientMojo : AbstractMojo() {
 
         if (generateIntrospectionFile) {
             log.info("Automatically generating introspection file from $schemaUrl")
-            val schema = getIntrospectionSchema(schemaUrl, customHeaders)
+            val schema = getIntrospectionSchema(schemaUrl, useSelfSignedCertificat, customHeaders)
             if (schema.isNotEmpty()) {
                 val remoteSchema = File(introspectionFile.toURI())
                 remoteSchema.parentFile?.mkdirs()

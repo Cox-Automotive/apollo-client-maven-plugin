@@ -57,7 +57,7 @@ jobs:
       - run:
           name: Sync version Artifacts to Maven Central
           command: |
-            curl -d '{"username": "${SONATYPE_USER_TOKEN}", "password": "${SONATYPE_PASSWORD}"}' -H "Content-Type: application/json" -X POST https://bintray.com/maven_central_sync/sparow199/maven/apollo-client-maven-plugin/3.0.2
+            curl -d '{"username": "${SONATYPE_USER_TOKEN}", "password": "${SONATYPE_PASSWORD}"}' -H "Content-Type: application/json" -X POST https://bintray.com/maven_central_sync/sparow199/maven/apollo-client-maven-plugin/3.0.3
 
 workflows:
   version: 2
