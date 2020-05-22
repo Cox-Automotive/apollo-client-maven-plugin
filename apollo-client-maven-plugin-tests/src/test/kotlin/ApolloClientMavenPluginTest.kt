@@ -93,7 +93,7 @@ class ApolloClientMavenPluginTest {
         val data = mapper.readValue(
                 OkHttpClient().newCall(Request.Builder().url("http://127.0.0.1:$port/graphql/schema.json").build())
                         .execute()
-                        .body?.byteStream(),
+                        .body()?.byteStream(),
                 Map::class.java
         )
         assertThat(data).isNotEmpty
@@ -105,14 +105,14 @@ class ApolloClientMavenPluginTest {
     @DisplayName("generated book query returns data")
     fun bookQueryTest() {
         val response = client.query(GetBooksQuery()).toCompletableFuture().join()
-        assertThat(response.data()?.get()?.books).isNotEmpty.hasSize(4)
+        assertThat(response.data?.get()?.books).isNotEmpty.hasSize(4)
     }
 
     @Test
     @DisplayName("generated author query returns data")
     fun authorQueryTest() {
         val response = client.query(GetAuthorsQuery()).toCompletableFuture().join()
-        assertThat(response.data()?.get()?.authors).isNotEmpty.hasSize(2)
+        assertThat(response.data?.get()?.authors).isNotEmpty.hasSize(2)
     }
 
     private fun createServlet(schema: GraphQLSchema): SimpleGraphQLHttpServlet {

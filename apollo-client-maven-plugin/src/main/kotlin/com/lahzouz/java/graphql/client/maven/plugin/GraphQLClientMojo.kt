@@ -94,6 +94,9 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "generateVisitorForPolymorphicDatatypes")
     private var generateVisitorForPolymorphicDatatypes: Boolean = true
 
+    @Parameter(property = "enumAsSealedClassPatternFilters")
+    private var enumAsSealedClassPatternFilters: List<String> = emptyList()
+
     @Throws(MojoExecutionException::class)
     override fun execute() {
 
@@ -165,7 +168,8 @@ class GraphQLClientMojo : AbstractMojo() {
                 suppressRawTypesWarning = suppressRawTypesWarning,
                 generateKotlinModels = generateKotlinModels,
                 generateAsInternal = generateAsInternal,
-                generateVisitorForPolymorphicDatatypes = generateVisitorForPolymorphicDatatypes)
+                generateVisitorForPolymorphicDatatypes = generateVisitorForPolymorphicDatatypes,
+                enumAsSealedClassPatternFilters = enumAsSealedClassPatternFilters)
         )
 
         if (addSourceRoot) {
