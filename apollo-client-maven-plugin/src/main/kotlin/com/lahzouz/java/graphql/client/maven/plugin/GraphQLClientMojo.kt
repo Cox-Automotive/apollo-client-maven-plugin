@@ -19,15 +19,15 @@ import java.nio.file.Files
 import java.util.stream.Collectors
 import kotlin.reflect.full.createInstance
 
-
 /**
  * Generate queries classes for a GraphQl API
  */
-@Mojo(name = "generate",
-        requiresDependencyCollection = ResolutionScope.COMPILE,
-        requiresDependencyResolution = ResolutionScope.COMPILE,
-        defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-        threadSafe = true
+@Mojo(
+    name = "generate",
+    requiresDependencyCollection = ResolutionScope.COMPILE,
+    requiresDependencyResolution = ResolutionScope.COMPILE,
+    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+    threadSafe = true
 )
 class GraphQLClientMojo : AbstractMojo() {
 
@@ -37,7 +37,10 @@ class GraphQLClientMojo : AbstractMojo() {
     @Parameter(property = "introspectionFile", defaultValue = "\${project.basedir}/src/main/graphql/schema.json")
     private lateinit var introspectionFile: File
 
-    @Parameter(property = "outputDirectory", defaultValue = "\${project.build.directory}/generated-sources/graphql-client")
+    @Parameter(
+        property = "outputDirectory",
+        defaultValue = "\${project.build.directory}/generated-sources/graphql-client"
+    )
     private lateinit var outputDirectory: File
 
     @Parameter(property = "rootPackageName", defaultValue = "com.example.graphql.client")
@@ -114,9 +117,9 @@ class GraphQLClientMojo : AbstractMojo() {
 
         log.info("Read queries files")
         val queries = Files.walk(queryDir.toPath())
-                .filter { it.toFile().isFile && it.toFile().name.endsWith(".graphql") }
-                .map { it.toFile() }
-                .collect(Collectors.toList())
+            .filter { it.toFile().isFile && it.toFile().name.endsWith(".graphql") }
+            .map { it.toFile() }
+            .collect(Collectors.toList())
 
         if (queries.isEmpty()) {
             throw MojoExecutionException("No queries found under '${queryDir.absolutePath}")
@@ -128,7 +131,7 @@ class GraphQLClientMojo : AbstractMojo() {
             if (schema.isNotEmpty()) {
                 val remoteSchema = File(introspectionFile.toURI())
                 remoteSchema.parentFile?.mkdirs()
-                        ?: throw MojoExecutionException("Error, can't create introspection file parent directory")
+                    ?: throw MojoExecutionException("Error, can't create introspection file parent directory")
                 remoteSchema.writeText(schema)
             } else {
                 throw MojoExecutionException("Error, can't generate introspection schema file from: $schemaUrl")
@@ -141,21 +144,22 @@ class GraphQLClientMojo : AbstractMojo() {
 
         val operationIdGenerator = if (operationIdGeneratorClass.isEmpty()) {
             Class.forName("com.apollographql.apollo.compiler.OperationIdGenerator\$Sha256").kotlin
-                    .createInstance() as OperationIdGenerator
+                .createInstance() as OperationIdGenerator
         } else {
             Class.forName(operationIdGeneratorClass).kotlin.createInstance() as OperationIdGenerator
         }
 
         val packageNameProvider = DefaultPackageNameProvider(
-                rootFolders = listOf(sourceDirName),
-                schemaFile = introspectionFile,
-                rootPackageName = rootPackageName
+            rootFolders = listOf(sourceDirName),
+            schemaFile = introspectionFile,
+            rootPackageName = rootPackageName
         )
         val graphQLDocumentParser = GraphQLDocumentParser(Schema(introspectionFile), packageNameProvider)
         val ir = graphQLDocumentParser.parse(queries)
 
         val compiler = GraphQLCompiler()
-        compiler.write(GraphQLCompiler.Arguments(
+        compiler.write(
+            GraphQLCompiler.Arguments(
                 ir = ir,
                 outputDir = outputDirectory,
                 customTypeMap = customTypeMap,
@@ -169,7 +173,8 @@ class GraphQLClientMojo : AbstractMojo() {
                 generateKotlinModels = generateKotlinModels,
                 generateAsInternal = generateAsInternal,
                 generateVisitorForPolymorphicDatatypes = generateVisitorForPolymorphicDatatypes,
-                enumAsSealedClassPatternFilters = enumAsSealedClassPatternFilters)
+                enumAsSealedClassPatternFilters = enumAsSealedClassPatternFilters
+            )
         )
 
         if (addSourceRoot) {
@@ -178,5 +183,4 @@ class GraphQLClientMojo : AbstractMojo() {
         }
         log.info("Apollo GraphQL Client Code Generation task finished")
     }
-
 }

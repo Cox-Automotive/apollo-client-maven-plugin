@@ -18,13 +18,16 @@ import io.undertow.servlet.util.ImmediateInstanceFactory
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
 import java.io.File
 import java.math.BigDecimal
 import java.net.InetSocketAddress
 import javax.servlet.Servlet
-
 
 /**
  * @author AOUDIA Moncef
@@ -40,25 +43,29 @@ class ApolloClientMavenPluginTest {
     fun setupSpec() {
 
         val libSchema = SchemaParser.newParser()
-                .file("schema.graphqls")
-                .resolvers(Query())
-                .build()
-                .makeExecutableSchema()
+            .file("schema.graphqls")
+            .resolvers(Query())
+            .build()
+            .makeExecutableSchema()
 
         val servlet = createServlet(libSchema)
 
         val servletBuilder = Servlets.deployment()
-                .setClassLoader(javaClass.classLoader)
-                .setContextPath("/")
-                .setDeploymentName("test")
-                .addServlets(Servlets.servlet("GraphQLServlet", SimpleGraphQLHttpServlet::class.java,
-                        ImmediateInstanceFactory(servlet as Servlet)).addMapping("/graphql/*"))
+            .setClassLoader(javaClass.classLoader)
+            .setContextPath("/")
+            .setDeploymentName("test")
+            .addServlets(
+                Servlets.servlet(
+                    "GraphQLServlet", SimpleGraphQLHttpServlet::class.java,
+                    ImmediateInstanceFactory(servlet as Servlet)
+                ).addMapping("/graphql/*")
+            )
 
         val manager = Servlets.defaultContainer().addDeployment(servletBuilder)
         manager.deploy()
         server = Undertow.builder()
-                .addHttpListener(0, "127.0.0.1")
-                .setHandler(manager.start()).build()
+            .addHttpListener(0, "127.0.0.1")
+            .setHandler(manager.start()).build()
         server.start()
 
         val inetSocketAddress: InetSocketAddress = server.listenerInfo[0].address as InetSocketAddress
@@ -75,10 +82,10 @@ class ApolloClientMavenPluginTest {
         }
 
         client = ApolloClient.builder()
-                .serverUrl("http://127.0.0.1:$port/graphql")
-                .addCustomTypeAdapter(CustomType.LONG, longCustomTypeAdapter)
-                .okHttpClient(OkHttpClient())
-                .build()
+            .serverUrl("http://127.0.0.1:$port/graphql")
+            .addCustomTypeAdapter(CustomType.LONG, longCustomTypeAdapter)
+            .okHttpClient(OkHttpClient())
+            .build()
     }
 
     @AfterAll
@@ -91,10 +98,10 @@ class ApolloClientMavenPluginTest {
     fun introspectionQueryTest() {
         val mapper = ObjectMapper()
         val data = mapper.readValue(
-                OkHttpClient().newCall(Request.Builder().url("http://127.0.0.1:$port/graphql/schema.json").build())
-                        .execute()
-                        .body()?.byteStream(),
-                Map::class.java
+            OkHttpClient().newCall(Request.Builder().url("http://127.0.0.1:$port/graphql/schema.json").build())
+                .execute()
+                .body()?.byteStream(),
+            Map::class.java
         )
         assertThat(data).isNotEmpty
 

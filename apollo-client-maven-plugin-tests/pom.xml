@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.sparow199</groupId>
         <artifactId>apollo-client-maven-plugin-parent</artifactId>
-        <version>3.1.0</version>
+        <version>3.2.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -22,7 +22,7 @@
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
         <maven.install.skip>true</maven.install.skip>
 
-        <apollo-client-maven-plugin.version>3.1.0</apollo-client-maven-plugin.version>
+        <apollo-client-maven-plugin.version>3.2.0-SNAPSHOT</apollo-client-maven-plugin.version>
         <apollo-runtime.version>2.1.0</apollo-runtime.version>
         <annotations.version>19.0.0</annotations.version>
         <assertj-core.version>3.16.1</assertj-core.version>
@@ -30,7 +30,7 @@
         <graphql-java-tools.version>5.2.4</graphql-java-tools.version>
         <junit.jupiter.version>5.6.2</junit.jupiter.version>
         <slf4j-simple.version>1.7.30</slf4j-simple.version>
-        <undertow.version>2.1.0.Final</undertow.version>
+        <undertow.version>2.1.3.Final</undertow.version>
     </properties>
 
     <dependencies>
