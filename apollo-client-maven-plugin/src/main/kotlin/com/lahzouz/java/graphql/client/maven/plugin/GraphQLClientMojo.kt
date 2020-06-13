@@ -150,7 +150,7 @@ class GraphQLClientMojo : AbstractMojo() {
         }
 
         val packageNameProvider = DefaultPackageNameProvider(
-            rootFolders = listOf(sourceDirName),
+            rootFolders = listOf(queryDir),
             schemaFile = introspectionFile,
             rootPackageName = rootPackageName
         )
