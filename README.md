@@ -20,8 +20,13 @@ A full usage example can be found in the [test project](https://github.com/sparo
    <dependency>
        <groupId>com.apollographql.apollo</groupId>
        <artifactId>apollo-runtime</artifactId>
-       <version>2.2.0</version>
+       <version>2.2.2</version>
    </dependency>
+    <dependency>
+        <groupId>com.squareup.okio</groupId>
+        <artifactId>okio</artifactId>
+        <version>2.5.0</version>
+    </dependency>
    <!-- Optional, needed only for ANNOTATED nullable type-->
    <dependency>
        <groupId>org.jetbrains</groupId>
@@ -42,7 +47,7 @@ A full usage example can be found in the [test project](https://github.com/sparo
 <plugin>
     <groupId>com.github.sparow199</groupId>
     <artifactId>apollo-client-maven-plugin</artifactId>
-    <version>3.2.0</version>
+    <version>3.2.1</version>
     <executions>
         <execution>
             <goals>
